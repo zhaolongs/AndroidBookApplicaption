@@ -14,7 +14,6 @@ public class App extends Application {
     public static Context mContext;
 
     public static Handler mHandler;
-    public static DaoSession mDaoSession;
     private static App mApp;
 
     @Override
@@ -28,17 +27,13 @@ public class App extends Application {
     }
 
     private void initDbFunction() {
-        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(getApplicationContext(), "lenve.db", null);
-        DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDb());
-        mDaoSession = daoMaster.newSession();
+
     }
 
     public static App getInstance(){
         return new App();
     }
-    public DaoSession getDaoSession(){
-        return  mDaoSession;
-    }
+
 
     public static final boolean ENCRYPTED = true;
 
