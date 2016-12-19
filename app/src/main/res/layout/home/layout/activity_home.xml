@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_home_background_bitmap"
+    android:orientation="vertical"
+    tools:context="com.androidlongs.bookapplication.main.home.HomeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <include
+            android:id="@+id/id_common_header"
+            layout="@layout/common_header"
+            android:visibility="gone"/>
+
+        <include
+            android:id="@+id/id_home_header"
+            layout="@layout/home_header"
+            android:visibility="visible"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/id_fl_main_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <include
+        android:id="@+id/id_home_footer"
+        layout="@layout/home_footer"/>
+</LinearLayout>

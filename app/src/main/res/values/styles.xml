@@ -1,0 +1,21 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="FeelyouWindowAnimTheme" parent="@android:style/Animation.Activity">
+        <!-- 当我们从 A1 启动 A2 时，A2 出现在屏幕上 -->
+        <item name="android:activityOpenEnterAnimation">@anim/in_open</item>
+        <!-- 当我们从 A1 启动 A2 时，A1 从屏幕上消失-->
+        <item name="android:activityOpenExitAnimation">@anim/out_open</item>
+        <!--当我们从 A2 退出回到 A1 时，A2 从屏幕上消失-->
+        <item name="android:activityCloseEnterAnimation">@anim/in_open</item>
+        <!--当我们从 A2 退出回到 A1 时，A1 出现在屏幕上-->
+        <item name="android:activityCloseExitAnimation">@anim/out_open</item>
+    </style>
+</resources>

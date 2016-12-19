@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+
+    <solid android:color="@color/home_book_list_item_background_press"/>
+    <size android:width="20dp" android:height="10dp"/>
+
+    <stroke android:width="0.5dp" android:color="@color/home_book_list_item_background_press"/>
+</shape>
