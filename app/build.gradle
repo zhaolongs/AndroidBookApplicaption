@@ -44,4 +44,5 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.6.0'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'org.greenrobot:greendao:3.2.0'
 }

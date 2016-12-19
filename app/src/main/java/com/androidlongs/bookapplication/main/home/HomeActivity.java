@@ -5,10 +5,12 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.androidlongs.bookapplication.R;
+import com.androidlongs.bookapplication.base.App;
 import com.androidlongs.bookapplication.base.BaseActivity;
 import com.androidlongs.bookapplication.main.find.FindMainFrament;
 import com.androidlongs.bookapplication.main.forum.ForumMainFrament;
@@ -30,9 +32,25 @@ public class HomeActivity extends BaseActivity {
 
     private LinearLayout mCommonHeaderLinearLayout;
     private LinearLayout mHomeHeaderLinearLayout;
+
+    private TextView mCommHeaderTitleTextView;
+
+
+
     private int mHeaderLablePressColor;
     private int mHeaderLableNormalColor;
-    private TextView mCommHeaderTitleTextView;
+
+
+    private int mFootertLablePressColor;
+    private int mFooterLableNormalColor;
+    private TextView mFooterHomeTextView;
+    private ImageView mFooterHomeImageView;
+    private TextView mFooterFindTextView;
+    private ImageView mFooterFindImageView;
+    private TextView mFooterForumTextView;
+    private ImageView mFooterForumImageView;
+    private TextView mFooterPersonTextView;
+    private ImageView mFooterPersonImageView;
 
     @Override
     public int getContentView() {
@@ -57,6 +75,23 @@ public class HomeActivity extends BaseActivity {
         mFooterPersonLinearLayout = (LinearLayout) footerLinearLayout.findViewById(R.id.id_ll_home_footer_person);
 
 
+        mFooterHomeTextView = (TextView) footerLinearLayout.findViewById(R.id.id_tv_home_footer_home);
+        mFooterHomeImageView = (ImageView) footerLinearLayout.findViewById(R.id.id_iv_home_footer_home);
+
+
+        mFooterFindTextView = (TextView) footerLinearLayout.findViewById(R.id.id_tv_home_footer_find);
+        mFooterFindImageView = (ImageView) footerLinearLayout.findViewById(R.id.id_iv_home_footer_find);
+
+
+        mFooterForumTextView = (TextView) footerLinearLayout.findViewById(R.id.id_tv_home_footer_rus);
+        mFooterForumImageView = (ImageView) footerLinearLayout.findViewById(R.id.id_iv_home_footer_rus);
+
+
+        mFooterPersonTextView = (TextView) footerLinearLayout.findViewById(R.id.id_tv_home_footer_person);
+        mFooterPersonImageView = (ImageView) footerLinearLayout.findViewById(R.id.id_iv_home_footer_person);
+
+
+
         mLeftTitleLableTextView = (TextView) findViewById(R.id.id_home_title_lable_left);
         mRightTitleLableTextView = (TextView) findViewById(R.id.id_home_title_lable_right);
 
@@ -75,12 +110,27 @@ public class HomeActivity extends BaseActivity {
     public void commonFunction() {
 
         setViewClickFunction();
-
-
+        //加载资源文件
         mHeaderLablePressColor = getResources().getColor(R.color.home_header_lable_text_press_color);
         mHeaderLableNormalColor = getResources().getColor(R.color.home_header_lable_text_normal_color);
-        //默认页面
-        onCheckedChanged(mTagHomeBookList,false);
+
+        mFootertLablePressColor = getResources().getColor(R.color.home_footer_lable_text_normal_color);
+        mFooterLableNormalColor= getResources().getColor(R.color.home_footer_lable_text_press_color);
+
+        //延迟加载 Frament 页面
+        App.mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //默认页面
+                onCheckedChanged(mTagHomeBookList, false);
+
+            }
+        }, 500);
+
+
+        //设置 底部labale默认颜色
+        mFooterHomeTextView.setTextColor(mFootertLablePressColor);
+        mFooterHomeImageView.setSelected(true);
 
 
     }
@@ -97,7 +147,7 @@ public class HomeActivity extends BaseActivity {
                 mLeftTitleLableTextView.setTextColor(mHeaderLablePressColor);
                 mRightTitleLableTextView.setTextColor(mHeaderLableNormalColor);
 
-                onCheckedChanged(mTagHomeBookList,true);
+                onCheckedChanged(mTagHomeBookList, true);
 
             }
         });
@@ -108,7 +158,7 @@ public class HomeActivity extends BaseActivity {
                 mRightTitleLableTextView.setSelected(true);
                 mLeftTitleLableTextView.setTextColor(mHeaderLableNormalColor);
                 mRightTitleLableTextView.setTextColor(mHeaderLablePressColor);
-                onCheckedChanged(mTagHomeBookClass,true);
+                onCheckedChanged(mTagHomeBookClass, true);
             }
         });
 
@@ -121,8 +171,18 @@ public class HomeActivity extends BaseActivity {
                 mCommonHeaderLinearLayout.setVisibility(View.GONE);
                 mHomeHeaderLinearLayout.setVisibility(View.VISIBLE);
 
-                onCheckedChanged(mTagHomeBookList,true);
+                onCheckedChanged(mTagHomeBookList, true);
 
+                mFooterHomeTextView.setTextColor(mFootertLablePressColor);
+                mFooterHomeImageView.setSelected(true);
+
+                mFooterFindTextView.setTextColor(mFooterLableNormalColor);
+                mFooterFindImageView.setSelected(false);
+
+                mFooterForumTextView.setTextColor(mFooterLableNormalColor);
+                mFooterForumImageView.setSelected(false);
+                mFooterPersonTextView.setTextColor(mFooterLableNormalColor);
+                mFooterPersonImageView.setSelected(false);
 
             }
         });
@@ -131,8 +191,18 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View v) {
                 mCommonHeaderLinearLayout.setVisibility(View.VISIBLE);
                 mHomeHeaderLinearLayout.setVisibility(View.GONE);
-                onCheckedChanged(mTagFindFrament,false);
+                onCheckedChanged(mTagFindFrament, false);
                 mCommHeaderTitleTextView.setText("发现");
+
+                mFooterHomeTextView.setTextColor(mFooterLableNormalColor);
+                mFooterHomeImageView.setSelected(false);
+                mFooterFindTextView.setTextColor(mFootertLablePressColor);
+                mFooterFindImageView.setSelected(true);
+
+                mFooterForumTextView.setTextColor(mFooterLableNormalColor);
+                mFooterForumImageView.setSelected(false);
+                mFooterPersonTextView.setTextColor(mFooterLableNormalColor);
+                mFooterPersonImageView.setSelected(false);
             }
         });
         mFooterForumLinearLayout.setOnClickListener(new View.OnClickListener() {
@@ -140,8 +210,18 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View v) {
                 mCommonHeaderLinearLayout.setVisibility(View.VISIBLE);
                 mHomeHeaderLinearLayout.setVisibility(View.GONE);
-                onCheckedChanged(mTagFroumFrament,false);
+                onCheckedChanged(mTagFroumFrament, false);
                 mCommHeaderTitleTextView.setText("论坛");
+
+                mFooterHomeTextView.setTextColor(mFooterLableNormalColor);
+                mFooterHomeImageView.setSelected(false);
+
+                mFooterFindTextView.setTextColor(mFooterLableNormalColor);
+                mFooterFindImageView.setSelected(false);
+                mFooterForumTextView.setTextColor(mFootertLablePressColor);
+                mFooterForumImageView.setSelected(true);
+                mFooterPersonTextView.setTextColor(mFooterLableNormalColor);
+                mFooterPersonImageView.setSelected(false);
             }
         });
         mFooterPersonLinearLayout.setOnClickListener(new View.OnClickListener() {
@@ -149,8 +229,19 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View v) {
                 mCommonHeaderLinearLayout.setVisibility(View.VISIBLE);
                 mHomeHeaderLinearLayout.setVisibility(View.GONE);
-                onCheckedChanged(mTagPersonFrament,false);
+                onCheckedChanged(mTagPersonFrament, false);
                 mCommHeaderTitleTextView.setText("个人中心");
+
+                mFooterHomeTextView.setTextColor(mFooterLableNormalColor);
+                mFooterHomeImageView.setSelected(false);
+
+
+                mFooterFindTextView.setTextColor(mFooterLableNormalColor);
+                mFooterFindImageView.setSelected(false);
+                mFooterForumTextView.setTextColor(mFooterLableNormalColor);
+                mFooterForumImageView.setSelected(false);
+                mFooterPersonTextView.setTextColor(mFootertLablePressColor);
+                mFooterPersonImageView.setSelected(true);
 
             }
         });
@@ -167,9 +258,9 @@ public class HomeActivity extends BaseActivity {
     //默认值
     private String mCurrentTagFrament = mTagHomeBookList;
 
-    public void onCheckedChanged(String tag,boolean flag) {
+    public void onCheckedChanged(String tag, boolean flag) {
         //重复点击 加载页面
-        if (TextUtils.equals(tag,mCurrentTagFrament)) {
+        if (TextUtils.equals(tag, mCurrentTagFrament)) {
             return;
         }
         //当前页面
@@ -178,14 +269,14 @@ public class HomeActivity extends BaseActivity {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         //设置切换动画
-        if (flag){
-            if (TextUtils.equals(tag,mTagHomeBookList)) {
+        if (flag) {
+            if (TextUtils.equals(tag, mTagHomeBookList)) {
                 ft.setCustomAnimations(
                         R.animator.home_book_list_show,
                         R.animator.home_book_list_hide,
                         R.animator.back_from_in,
                         R.animator.back_from_out);
-            }else {
+            } else {
                 ft.setCustomAnimations(
                         R.animator.from_right,
                         R.animator.to_left,

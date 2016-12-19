@@ -21,7 +21,7 @@
             android:id="@+id/id_iv_home_footer_home"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@mipmap/iphoen"/>
+            android:src="@drawable/bootom_lable_home_select"/>
 
         <TextView
             android:id="@+id/id_tv_home_footer_home"
@@ -47,9 +47,9 @@
 
         <ImageView
             android:id="@+id/id_iv_home_footer_find"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/iphoen"/>
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/bootom_lable_find_select"/>
 
         <TextView
             android:id="@+id/id_tv_home_footer_find"
@@ -77,7 +77,7 @@
             android:id="@+id/id_iv_home_footer_rus"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@mipmap/iphoen"/>
+            android:src="@drawable/bootom_lable_forum_select"/>
 
         <TextView
             android:id="@+id/id_tv_home_footer_rus"
@@ -105,7 +105,7 @@
             android:id="@+id/id_iv_home_footer_person"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@mipmap/iphoen"/>
+            android:src="@drawable/bootom_lable_person_select"/>
 
         <TextView
             android:id="@+id/id_tv_home_footer_person"

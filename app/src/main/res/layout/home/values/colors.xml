@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="header_background_color">#161616</color>
+
+    <color name="home_book_list_item_background_normal">#f1efef</color>
+    <color name="home_book_list_item_background_press">#5b5a5a</color>
+
+
+    <color name="home_header_lable_text_press_color">#ffffff</color>
+    <color name="home_header_lable_text_normal_color">#aeadad</color>
+
+    <color name="home_footer_lable_text_press_color">#1a1919</color>
+    <color name="home_footer_lable_text_normal_color">#13227a</color>
+</resources>
