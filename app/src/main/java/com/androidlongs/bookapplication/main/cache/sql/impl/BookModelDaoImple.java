@@ -29,11 +29,8 @@ public class BookModelDaoImple implements BookModelDao {
     @Override
     public void inserModel(BaseModel model) {
         BookModel bookModel = (BookModel) model;
-        String createBookListSql =
-                "create table books(uuid int auto_increment primary key not null," +
-                        " id varchar(100),name varchar(100),author varchar(20),description varchar(300)," +
-                        "path varchar(100), filename varchar(20) ,categoryId varchar(100),addTime varchar(100)";
-        LogUtils.d("构建建语句 ");
+
+
 
         String inserSql =
                 "insert into books(id,name,author,description,path,filename,categoryId,addTime)" +
@@ -55,20 +52,26 @@ public class BookModelDaoImple implements BookModelDao {
         builder.append("\", \"");
         builder.append(bookModel.category);
         builder.append("\", \"");
-        builder.append(new Date().getTime()+"");
+        builder.append(new Date().getTime() + "");
         builder.append("\" )");
 
         inserSql = builder.toString().trim();
+        BaseModel baseModel = queryModel(bookModel.name);
+        if (baseModel == null) {
+            LogUtils.d("数据库 新增书籍 "+inserSql);
+            DBManagerUtils.getInstance().exeData(inserSql);
 
-        DBManagerUtils.getInstance().exeData(inserSql);
-        if (bookModel.category != null) {
-            mBookClassModelDao.inserModel(bookModel.category);
+        } else {
+            updateModel(bookModel);
         }
+
+
     }
 
     @Override
     public BaseModel queryModel(String name) {
-        String querySql = "slelect * from books where name = ?";
+        LogUtils.d("数据库 查询 "+name+"  操作");
+        String querySql = "select  * from books where name = ?";
         DBManagerHelper helper = DBManagerUtils.getInstance().getHelper();
         SQLiteDatabase readableDatabase = helper.getReadableDatabase();
         Cursor cursor = readableDatabase.rawQuery(querySql, new String[] {name});
@@ -97,7 +100,7 @@ public class BookModelDaoImple implements BookModelDao {
 
     @Override
     public List<BaseModel> queryAllModel() {
-
+        LogUtils.d("数据库 查询所有数据 操作");
 
         String auerySql = "select * from books ";
         DBManagerHelper helper = DBManagerUtils.getInstance().getHelper();
@@ -135,12 +138,39 @@ public class BookModelDaoImple implements BookModelDao {
 
     @Override
     public void updateModel(BaseModel model) {
-        String inserSql = "";
-        DBManagerUtils.getInstance().exeData(inserSql);
+        LogUtils.d("数据库 书籍信息更新操作");
+        BookModel bookModel = (BookModel) model;
+        String inserSql =
+                "update  books  set name = ?,author =?," +
+                        "description = ?,path = ?,filename = ?," +
+                        "categoryId = ?,addTime= ? where id = ?";
+        BookClassModel category = bookModel.category;
+        String categoryId = "";
+        if (category != null) {
+            categoryId = category.id;
+
+        }
+
+        String[] values =
+                {
+                        bookModel.name,
+                        bookModel.author,
+                        bookModel.description,
+                        bookModel.path,
+                        bookModel.filename,
+                        categoryId,
+                        new Date().getTime() + "",
+                        bookModel.id
+
+                };
+
+        DBManagerUtils.getInstance().exeData(inserSql, values);
+
     }
 
     @Override
     public void deleteModel(String name) {
+        LogUtils.d("数据库 书籍信息删除操作");
         String inserSql = "";
         DBManagerUtils.getInstance().exeData(inserSql);
     }

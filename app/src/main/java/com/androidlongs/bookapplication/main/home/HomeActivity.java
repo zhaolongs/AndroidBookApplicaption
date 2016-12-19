@@ -256,7 +256,7 @@ public class HomeActivity extends BaseActivity {
     private String mTagPersonFrament = "person_frament";
 
     //默认值
-    private String mCurrentTagFrament = mTagHomeBookList;
+    private String mCurrentTagFrament = "";
 
     public void onCheckedChanged(String tag, boolean flag) {
         //重复点击 加载页面

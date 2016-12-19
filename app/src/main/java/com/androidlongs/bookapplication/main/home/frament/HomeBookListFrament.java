@@ -8,6 +8,7 @@ import android.view.View;
 import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
 import com.androidlongs.bookapplication.base.BaseFrament;
+import com.androidlongs.bookapplication.base.BaseModel;
 import com.androidlongs.bookapplication.main.home.adapter.HomeBookListAdapter;
 import com.androidlongs.bookapplication.main.home.model.BookModel;
 import com.androidlongs.bookapplication.main.net.HttpHelper;
@@ -47,12 +48,9 @@ public class HomeBookListFrament extends BaseFrament {
     public void commonFunction() {
 
         setRecyclerListData();
-        App.mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getBookListFromNet();
-            }
-        }, 2000);
+        //加载本地数据
+        loadDbCacheDatas();
+
     }
 
     private HomeBookListAdapter mHomeBookListAdapter;
@@ -70,6 +68,7 @@ public class HomeBookListFrament extends BaseFrament {
     }
 
     private void getBookListFromNet() {
+        LogUtils.d("加载网络数据");
         String url = HttpHelper.sBaseUrl + "?tag=getBookList";
         OkhttpRequestUtils.getInstance().getRequest(url, mGetBookListCallback);
     }
@@ -89,6 +88,11 @@ public class HomeBookListFrament extends BaseFrament {
             LogUtils.d(string);
             if (!TextUtils.isEmpty(string)) {
                 mBookModelList = GsonUtil.parseJsonArrayWithGson(string, BookModel.class);
+                //保存到数据库
+                for (BookModel bookModel : mBookModelList) {
+
+                    mCommonBaseServiceInterface.addBookModel(bookModel);
+                }
                 App.mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -99,4 +103,19 @@ public class HomeBookListFrament extends BaseFrament {
             }
         }
     };
+
+
+    //加载数据库中的数据
+    private void loadDbCacheDatas() {
+        LogUtils.d("加载本地数据");
+
+        List<BaseModel> baseModels = mCommonBaseServiceInterface.queryAllBookModel();
+        for (BaseModel baseModel : baseModels) {
+            mBookModelList.add((BookModel)baseModel);
+        }
+        setRecyclerListData();
+
+        getBookListFromNet();
+    }
+
 }

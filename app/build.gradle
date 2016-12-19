@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "25.0.1"
+    compileSdkVersion 25
+    buildToolsVersion '25.0.1'
     defaultConfig {
         applicationId "com.androidlongs.bookapplication"
         minSdkVersion 19
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -15,6 +16,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            pseudoLocalesEnabled true
+            zipAlignEnabled true
         }
     }
 
@@ -32,7 +37,31 @@ android {
             ]
         }
     }
+    dexOptions {
+        incremental true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+
+
+    greendao{
+//        schemaVersion: 数据库schema版本号，默认为1。
+//        daoPackage: greendao生成文件 DAOs,DaoMaster,DaoSession所在的包名，默认为源码实体所在的包名。
+//        targetGenDir: 上面包所在的路径目录，默认为：build/generated/source/greendao。
+//        generateTests: 设置为true可以自动生成单元测试。
+//        targetGenDirTests:生成单元测试存储在的目录， 默认为：src/androidTest/java。
+
+        schemaVersion 1
+        targetGenDir 'src/main/java'
+        daoPackage 'com.androidlongs.bookapplication.dao'
+    }
 }
+
+
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -45,4 +74,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.android.support:recyclerview-v7:25.1.0'
     compile 'org.greenrobot:greendao:3.2.0'
+    compile 'org.greenrobot:greendao-generator:3.1.0'
 }
