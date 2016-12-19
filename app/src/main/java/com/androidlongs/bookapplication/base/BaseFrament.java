@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.androidlongs.bookapplication.main.cache.sql.dao.CommonBaseServiceInterface;
+import com.androidlongs.bookapplication.main.cache.sql.impl.CommonBaseServiceImpl;
 import com.google.gson.Gson;
 
 /**
@@ -16,6 +18,7 @@ import com.google.gson.Gson;
  */
 
 public abstract class BaseFrament extends Fragment {
+    public CommonBaseServiceInterface mCommonBaseServiceInterface = new CommonBaseServiceImpl();
     public Gson mGson = new Gson();
     @Nullable
     @Override

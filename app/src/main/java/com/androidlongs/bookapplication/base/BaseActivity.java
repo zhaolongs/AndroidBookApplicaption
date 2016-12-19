@@ -5,6 +5,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Window;
 
+import com.androidlongs.bookapplication.main.cache.sql.dao.CommonBaseServiceInterface;
+import com.androidlongs.bookapplication.main.cache.sql.impl.CommonBaseServiceImpl;
+
 /**
  * Created by androidlongs on 16/12/18.
  * 站在顶峰，看世界
@@ -12,6 +15,7 @@ import android.view.Window;
  */
 
 public abstract class BaseActivity extends Activity {
+    public CommonBaseServiceInterface mCommonBaseServiceInterface = new CommonBaseServiceImpl();
     public Context mActivityContext;
     public Context mAppContext;
     @Override
