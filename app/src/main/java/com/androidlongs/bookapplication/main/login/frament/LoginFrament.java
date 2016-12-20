@@ -3,6 +3,8 @@ package com.androidlongs.bookapplication.main.login.frament;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import com.androidlongs.bookapplication.R;
@@ -19,6 +21,7 @@ public class LoginFrament extends BaseFrament {
 
     private LinearLayout mBackLinearLayout;
     private Button mLoginButton;
+    private CheckBox mCheckBox;
 
     @Override
     public int getContentView() {
@@ -30,6 +33,8 @@ public class LoginFrament extends BaseFrament {
 
         mBackLinearLayout = (LinearLayout) view.findViewById(R.id.id_login_frament_title_back);
         mLoginButton = (Button) view.findViewById(R.id.id_bt_frgament_login);
+
+        mCheckBox = (CheckBox) view.findViewById(R.id.cb_save_username);
 
     }
 
@@ -56,6 +61,13 @@ public class LoginFrament extends BaseFrament {
             @Override
             public void onClick(View v) {
                 LoginFrament.this.getActivity().startActivity(new Intent(LoginFrament.this.getActivity(), HomeActivity.class));
+            }
+        });
+
+        mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
             }
         });
     }

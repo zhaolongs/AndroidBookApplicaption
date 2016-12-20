@@ -263,8 +263,7 @@ public class HomeActivity extends BaseActivity {
         if (TextUtils.equals(tag, mCurrentTagFrament)) {
             return;
         }
-        //当前页面
-        mCurrentTagFrament = tag;
+
 
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -286,6 +285,8 @@ public class HomeActivity extends BaseActivity {
 
         }
 
+        //当前页面
+        mCurrentTagFrament = tag;
         Fragment mHomeBookListFrament = fm.findFragmentByTag(mTagHomeBookList);
         Fragment mHomeBookClassFrament = fm.findFragmentByTag(mTagHomeBookClass);
         Fragment mFindMainFrament = fm.findFragmentByTag(mTagFindFrament);
