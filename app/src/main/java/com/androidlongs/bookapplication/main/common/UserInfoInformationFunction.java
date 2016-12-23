@@ -60,4 +60,9 @@ public class UserInfoInformationFunction extends BaseFunction {
         }
 
     }
+
+    public void clearUserInfo() {
+        sUserInfoModel = null;
+        mSharedPreferencesUtil.saveData(AppConfigFile.spUserName, "");
+    }
 }

@@ -9,6 +9,7 @@ package com.androidlongs.bookapplication.main.common;
 public class UserInfoModel {
     public String  userName;
     public String id;
+    public String desc;
     public String password;
     //性别
     public String sex;
