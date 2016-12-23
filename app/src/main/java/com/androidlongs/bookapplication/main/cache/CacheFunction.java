@@ -7,4 +7,5 @@ package com.androidlongs.bookapplication.main.cache;
  */
 
 public class CacheFunction {
+
 }

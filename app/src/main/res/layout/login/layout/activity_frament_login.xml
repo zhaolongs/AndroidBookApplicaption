@@ -9,24 +9,28 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <LinearLayout
-            android:background="@drawable/bg_login_title_back_select"
             android:id="@+id/id_login_frament_title_back"
-            android:layout_marginTop="8dp"
-            android:paddingRight="10dp"
-            android:gravity="center_vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_login_title_back_select"
+            android:gravity="center_vertical"
+            android:paddingRight="10dp">
+
             <ImageView
-                android:src="@mipmap/back"
                 android:layout_width="30dp"
-                android:layout_height="30dp"/>
+                android:layout_height="30dp"
+                android:src="@mipmap/back"/>
+
             <TextView
-                android:textColor="#868585"
+                android:id="@+id/id_login_frament_username_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
                 android:text="返回"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textColor="#868585"/>
         </LinearLayout>
 
         <ImageView
@@ -54,13 +58,13 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -69,17 +73,17 @@
                     android:src="@mipmap/iphoen"/>
 
                 <EditText
-                    android:background="@null"
-                    android:layout_marginRight="20dp"
-                    android:textSize="14sp"
-                    android:id="@+id/id_et_fragment_login_username"
-                    android:maxLength="20"
-                    android:maxLines="1"
-                    android:textColor="#292929"
+                    android:id="@+id/id_et_login_frament_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:background="@null"
                     android:hint="请输入用户名"
-                    android:paddingLeft="10dp"/>
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:paddingLeft="10dp"
+                    android:textColor="#292929"
+                    android:textSize="14sp"/>
             </LinearLayout>
 
             <View
@@ -88,13 +92,13 @@
                 android:background="#898888"/>
 
             <LinearLayout
-                android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -103,16 +107,16 @@
                     android:src="@mipmap/password"/>
 
                 <EditText
-                    android:background="@null"
-                    android:textSize="14sp"
                     android:id="@+id/id_et_fragment_login_passwort"
-                    android:maxLength="20"
-                    android:maxLines="1"
-                    android:textColor="#292929"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@null"
                     android:hint="请输入密码"
-                    android:paddingLeft="10dp"/>
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:paddingLeft="10dp"
+                    android:textColor="#292929"
+                    android:textSize="14sp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -124,12 +128,11 @@
             android:layout_alignLeft="@+id/ll_username_main_content"
             android:layout_below="@+id/ll_username_main_content"
             android:layout_marginTop="8dp"
-            android:textColor="#292929"
             android:text="记住用户名"
+            android:textColor="#292929"
             android:textSize="10sp"/>
 
         <TextView
-            android:textColor="#292929"
             android:id="@+id/id_tv_login_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -138,6 +141,7 @@
             android:layout_alignEnd="@+id/ll_username_main_content"
             android:paddingRight="10dp"
             android:text="注册"
+            android:textColor="#292929"
             android:textSize="10sp"/>
 
 
@@ -158,33 +162,34 @@
 
         <LinearLayout
             android:id="@+id/id_ll_login_frament_other_login"
-            android:layout_marginTop="44dp"
-            android:layout_below="@+id/id_bt_frgament_login"
-            android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/id_bt_frgament_login"
+            android:layout_marginTop="44dp"
+            android:gravity="center_horizontal">
 
             <ImageView
-                android:layout_marginRight="20dp"
                 android:id="@+id/id_iv_frgament_qq_login"
-                android:src="@mipmap/qq_login"
                 android:layout_width="38dp"
-                android:layout_height="38dp"/>
+                android:layout_height="38dp"
+                android:layout_marginRight="20dp"
+                android:src="@mipmap/qq_login"/>
+
             <ImageView
-                android:layout_marginLeft="20dp"
                 android:id="@+id/id_iv_frgament_wei_login"
-                android:src="@mipmap/weixin"
                 android:layout_width="38dp"
-                android:layout_height="38dp"/>
+                android:layout_height="38dp"
+                android:layout_marginLeft="20dp"
+                android:src="@mipmap/weixin"/>
         </LinearLayout>
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/id_ll_login_frament_other_login"
             android:layout_marginTop="40dp"
             android:gravity="center_horizontal"
-            android:text="-- -- --"
-            android:layout_below="@+id/id_ll_login_frament_other_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:text="-- -- --"/>
 
     </RelativeLayout>
 

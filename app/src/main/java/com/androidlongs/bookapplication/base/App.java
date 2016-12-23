@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
+import com.androidlongs.bookapplication.main.common.UserInfoModel;
+
 /**
  * Created by androidlongs on 16/12/18.
  * 站在顶峰，看世界
@@ -13,7 +15,9 @@ import android.os.Handler;
 public class App extends Application {
     public static Context mContext;
 
-    public static Handler mHandler;
+    public static Handler mHandler
+            ;
+    public  static UserInfoModel sUserInfoModel;
     private static App mApp;
 
     @Override

@@ -63,12 +63,11 @@ public class OkhttpRequestUtils {
 
     /**
      * Post上传普通数据
-     *
-     * @param url      链接
+     *  @param url      链接
      * @param keyMap   所要上传的参数与值
      * @param callback 回调
      */
-    public void postRequest(String url, Map<String, String> keyMap, Callback callback) {
+    public Call postRequest(String url, Map<String, String> keyMap, Callback callback) {
 
         //构建数据体
         FormEncodingBuilder formEncodingBuilder = new FormEncodingBuilder();
@@ -86,9 +85,10 @@ public class OkhttpRequestUtils {
         Request request = builder.url(url).post(requestBody).build();
         //构建Call
         Call call = mOkHttpClient.newCall(request);
-        call.cancel();
+        //call.cancel();
         //添加到队列 中
         call.enqueue(callback);
+        return call;
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.androidlongs.bookapplication.main.common;
 
+import android.text.TextUtils;
+
 import com.androidlongs.bookapplication.base.AppConfigFile;
 import com.androidlongs.bookapplication.base.BaseFunction;
 
@@ -35,13 +37,18 @@ public class UserInfoInformationFunction extends BaseFunction {
 
     /**
      * 获取用户信息
+     *
      * @param flag true 更新内存缓存
      */
     public UserInfoModel getUserInfoModel(boolean flag) {
         if (flag) {
             String data = mSharedPreferencesUtil.getData(AppConfigFile.spUserName);
-            sUserInfoModel = mGson.fromJson(data, UserInfoModel.class);
-            return sUserInfoModel;
+            if (TextUtils.isEmpty(data)) {
+                return null;
+            } else {
+                sUserInfoModel = mGson.fromJson(data, UserInfoModel.class);
+                return sUserInfoModel;
+            }
         } else {
             if (sUserInfoModel != null) {
                 return sUserInfoModel;

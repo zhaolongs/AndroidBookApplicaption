@@ -7,5 +7,5 @@ package com.androidlongs.bookapplication.main.net;
  */
 
 public class HttpHelper {
-    public static  String sBaseUrl = "http://192.168.0.102:10008/BookStoreProgret/moble/book/service";
+    public static  String sBaseUrl = "http://192.168.0.101:10008/BookStoreProgret/moble/book/service";
 }

@@ -18,4 +18,11 @@
         <!--当我们从 A2 退出回到 A1 时，A1 出现在屏幕上-->
         <item name="android:activityCloseExitAnimation">@anim/out_open</item>
     </style>
+
+
+    <style name="PopToast">
+    <item name="@android:windowEnterAnimation">@anim/toast_anim_in</item>
+    <item name="@android:windowExitAnimation">@anim/toast_anim_out</item>
+    </style>
+
 </resources>
