@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/bg_welcome_background"
               android:orientation="vertical">
 
     <LinearLayout
@@ -48,7 +47,8 @@
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:text="登录"
-            android:textColor="#fff"
+            android:textSize="15sp"
+            android:textColor="#1e1e1e"
             />
 
         <Button
@@ -59,7 +59,8 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_button_common_select"
             android:text="随便看看"
-            android:textColor="#fff"/>
+            android:textSize="15sp"
+            android:textColor="#1e1e1e"/>
     </LinearLayout>
 
     <LinearLayout
@@ -72,6 +73,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingTop="20dp"
+            android:textColor="#292929"
             android:paddingBottom="28dp"
             android:text="v 1.0.0 "/>
     </LinearLayout>
