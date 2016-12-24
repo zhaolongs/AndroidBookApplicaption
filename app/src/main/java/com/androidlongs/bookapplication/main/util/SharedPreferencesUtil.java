@@ -52,4 +52,11 @@ public class SharedPreferencesUtil {
         }
         return null;
     }
+    public void removeData(String name){
+        if (!TextUtils.isEmpty(name)) {
+            mSharedPreferences.edit().remove(name).commit();
+        }
+    }
+
+
 }
