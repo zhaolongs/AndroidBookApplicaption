@@ -3,6 +3,7 @@ package com.androidlongs.bookapplication.main.home;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,7 +17,10 @@ import com.androidlongs.bookapplication.main.find.FindMainFrament;
 import com.androidlongs.bookapplication.main.forum.ForumMainFrament;
 import com.androidlongs.bookapplication.main.home.frament.HomeBookClassFrament;
 import com.androidlongs.bookapplication.main.home.frament.HomeBookListFrament;
-import com.androidlongs.bookapplication.main.person.PersonMainFrament;
+import com.androidlongs.bookapplication.main.login.frament.LoginFrament;
+import com.androidlongs.bookapplication.main.person.frament.PersonMainFrament;
+import com.androidlongs.bookapplication.main.util.LogUtils;
+import com.androidlongs.bookapplication.main.util.ToastUtils;
 
 /**
  * 首页
@@ -34,7 +38,6 @@ public class HomeActivity extends BaseActivity {
     private LinearLayout mHomeHeaderLinearLayout;
 
     private TextView mCommHeaderTitleTextView;
-
 
 
     private int mHeaderLablePressColor;
@@ -91,7 +94,6 @@ public class HomeActivity extends BaseActivity {
         mFooterPersonImageView = (ImageView) footerLinearLayout.findViewById(R.id.id_iv_home_footer_person);
 
 
-
         mLeftTitleLableTextView = (TextView) findViewById(R.id.id_home_title_lable_left);
         mRightTitleLableTextView = (TextView) findViewById(R.id.id_home_title_lable_right);
 
@@ -115,14 +117,14 @@ public class HomeActivity extends BaseActivity {
         mHeaderLableNormalColor = getResources().getColor(R.color.home_header_lable_text_normal_color);
 
         mFootertLablePressColor = getResources().getColor(R.color.home_footer_lable_text_normal_color);
-        mFooterLableNormalColor= getResources().getColor(R.color.home_footer_lable_text_press_color);
+        mFooterLableNormalColor = getResources().getColor(R.color.home_footer_lable_text_press_color);
 
         //延迟加载 Frament 页面
         App.mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 //默认页面
-                onCheckedChanged(mTagHomeBookList, false);
+                onCheckedChanged(mFooterTagHomeBookList, false);
 
             }
         }, 500);
@@ -136,29 +138,41 @@ public class HomeActivity extends BaseActivity {
     }
 
 
+    private long mPreHeaderClickTime = 0;
+
     private void setViewClickFunction() {
 
         mLeftTitleLableTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mLeftTitleLableTextView.setSelected(true);
-                mRightTitleLableTextView.setSelected(false);
+                long currentTimeMillis = System.currentTimeMillis();
+                long flag = currentTimeMillis - mPreHeaderClickTime;
+                if (flag > 1000) {
+                    mPreHeaderClickTime = currentTimeMillis;
+                    mLeftTitleLableTextView.setSelected(true);
+                    mRightTitleLableTextView.setSelected(false);
 
-                mLeftTitleLableTextView.setTextColor(mHeaderLablePressColor);
-                mRightTitleLableTextView.setTextColor(mHeaderLableNormalColor);
+                    mLeftTitleLableTextView.setTextColor(mHeaderLablePressColor);
+                    mRightTitleLableTextView.setTextColor(mHeaderLableNormalColor);
 
-                onCheckedChanged(mTagHomeBookList, true);
+                    onCheckedChanged(mHeaderTagHomeBookList, true);
+                }
 
             }
         });
         mRightTitleLableTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mLeftTitleLableTextView.setSelected(false);
-                mRightTitleLableTextView.setSelected(true);
-                mLeftTitleLableTextView.setTextColor(mHeaderLableNormalColor);
-                mRightTitleLableTextView.setTextColor(mHeaderLablePressColor);
-                onCheckedChanged(mTagHomeBookClass, true);
+                long currentTimeMillis = System.currentTimeMillis();
+                long flag = currentTimeMillis - mPreHeaderClickTime;
+                if (flag > 1000) {
+                    mPreHeaderClickTime = currentTimeMillis;
+                    mLeftTitleLableTextView.setSelected(false);
+                    mRightTitleLableTextView.setSelected(true);
+                    mLeftTitleLableTextView.setTextColor(mHeaderLableNormalColor);
+                    mRightTitleLableTextView.setTextColor(mHeaderLablePressColor);
+                    onCheckedChanged(mTagHomeBookClass, true);
+                }
             }
         });
 
@@ -171,7 +185,7 @@ public class HomeActivity extends BaseActivity {
                 mCommonHeaderLinearLayout.setVisibility(View.GONE);
                 mHomeHeaderLinearLayout.setVisibility(View.VISIBLE);
 
-                onCheckedChanged(mTagHomeBookList, true);
+                onCheckedChanged(mFooterTagHomeBookList, true);
 
                 mFooterHomeTextView.setTextColor(mFootertLablePressColor);
                 mFooterHomeImageView.setSelected(true);
@@ -247,7 +261,8 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
-    private String mTagHomeBookList = "home_book_list";
+    private String mHeaderTagHomeBookList = "home_header_book_list";
+    private String mFooterTagHomeBookList = "home_footer_book_list";
     private String mTagHomeBookClass = "home_bo0k_class";
 
     private String mTagFindFrament = "find_frament";
@@ -255,12 +270,14 @@ public class HomeActivity extends BaseActivity {
 
     private String mTagPersonFrament = "person_frament";
 
+    private String mLoginFramentTag = "login_frament";
     //默认值
     private String mCurrentTagFrament = "";
 
     public void onCheckedChanged(String tag, boolean flag) {
         //重复点击 加载页面
         if (TextUtils.equals(tag, mCurrentTagFrament)) {
+            ToastUtils.show("已是当前页面");
             return;
         }
 
@@ -268,32 +285,51 @@ public class HomeActivity extends BaseActivity {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         //设置切换动画
-        if (flag) {
-            if (TextUtils.equals(tag, mTagHomeBookList)) {
-                ft.setCustomAnimations(
-                        R.animator.home_book_list_show,
-                        R.animator.home_book_list_hide,
-                        R.animator.back_from_in,
-                        R.animator.back_from_out);
-            } else {
-                ft.setCustomAnimations(
-                        R.animator.from_right,
-                        R.animator.to_left,
-                        R.animator.back_from_in,
-                        R.animator.back_from_out);
-            }
+        if (TextUtils.equals(tag, mHeaderTagHomeBookList)) {
+            ft.setCustomAnimations(
+                    R.animator.home_book_list_show,
+                    R.animator.home_book_list_hide,
+                    R.animator.back_from_in,
+                    R.animator.back_from_out);
+        } else if (TextUtils.equals(tag, mTagHomeBookClass)) {
+            ft.setCustomAnimations(
+                    R.animator.from_right,
+                    R.animator.to_left,
+                    R.animator.back_from_in,
+                    R.animator.back_from_out);
+        } else {
 
         }
+//        if (flag) {
+//            if (TextUtils.equals(tag, mTagHomeBookList)) {
+//                ft.setCustomAnimations(
+//                        R.animator.home_book_list_show,
+//                        R.animator.home_book_list_hide,
+//                        R.animator.back_from_in,
+//                        R.animator.back_from_out);
+//            } else {
+//                ft.setCustomAnimations(
+//                        R.animator.from_right,
+//                        R.animator.to_left,
+//                        R.animator.back_from_in,
+//                        R.animator.back_from_out);
+//            }
+//
+//        }
 
         //当前页面
         mCurrentTagFrament = tag;
-        Fragment mHomeBookListFrament = fm.findFragmentByTag(mTagHomeBookList);
+        Fragment mHomeBookListFrament = fm.findFragmentByTag(mHeaderTagHomeBookList);
         Fragment mHomeBookClassFrament = fm.findFragmentByTag(mTagHomeBookClass);
         Fragment mFindMainFrament = fm.findFragmentByTag(mTagFindFrament);
         Fragment mForumMainFrament = fm.findFragmentByTag(mTagFroumFrament);
-        Fragment mPersonMainFrament = fm.findFragmentByTag(mTagPersonFrament);
+        Fragment personMainFrament = fm.findFragmentByTag(mTagPersonFrament);
 
+        Fragment mLoginFrament = fm.findFragmentByTag(mLoginFramentTag);
 
+        if (mLoginFrament != null) {
+            ft.hide(mLoginFrament);
+        }
         if (mHomeBookListFrament != null) {
             ft.hide(mHomeBookListFrament);
         }
@@ -307,15 +343,15 @@ public class HomeActivity extends BaseActivity {
             ft.hide(mForumMainFrament);
         }
 
-        if (mPersonMainFrament != null) {
-            ft.hide(mPersonMainFrament);
+        if (personMainFrament != null) {
+            ft.hide(personMainFrament);
         }
 
 
-        if (TextUtils.equals(tag, mTagHomeBookList)) {
+        if (TextUtils.equals(tag, mHeaderTagHomeBookList) || TextUtils.equals(tag, mFooterTagHomeBookList)) {
             if (mHomeBookListFrament == null) {
                 mHomeBookListFrament = new HomeBookListFrament();
-                ft.add(R.id.id_fl_main_content, mHomeBookListFrament, mTagHomeBookList).addToBackStack(mTagHomeBookList);
+                ft.add(R.id.id_fl_main_content, mHomeBookListFrament, mHeaderTagHomeBookList).addToBackStack(mHeaderTagHomeBookList);
             } else {
                 ft.show(mHomeBookListFrament);
             }
@@ -346,11 +382,19 @@ public class HomeActivity extends BaseActivity {
             }
 
         } else if (TextUtils.equals(tag, mTagPersonFrament)) {
-            if (mPersonMainFrament == null) {
-                mPersonMainFrament = new PersonMainFrament();
-                ft.add(R.id.id_fl_main_content, mPersonMainFrament, mTagPersonFrament).addToBackStack(mTagPersonFrament);
+            if (personMainFrament == null) {
+                personMainFrament = new PersonMainFrament();
+                ft.add(R.id.id_fl_main_content, personMainFrament, mTagPersonFrament).addToBackStack(mTagPersonFrament);
             } else {
-                ft.show(mPersonMainFrament);
+                ft.show(personMainFrament);
+            }
+
+        } else if (TextUtils.equals(tag, mLoginFramentTag)) {
+            if (mLoginFrament == null) {
+                mLoginFrament = new LoginFrament("person");
+                ft.add(R.id.id_fl_main_content, mLoginFrament, mLoginFramentTag).addToBackStack(mLoginFramentTag);
+            } else {
+                ft.show(mLoginFrament);
             }
 
         }
@@ -358,5 +402,19 @@ public class HomeActivity extends BaseActivity {
 
         ft.commit();
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            LogUtils.d("home activity result is function ");
+
+        }
+
+    }
 }
+
+
+
 
