@@ -12,8 +12,8 @@
         <LinearLayout
             android:id="@+id/id_ll_person_login_header"
             android:layout_width="match_parent"
-            android:layout_height="82dp"
-            android:background="#d8d8d8"
+            android:layout_height="78dp"
+            android:background="@drawable/bg_person_item_select"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -35,7 +35,7 @@
                     android:id="@+id/id_tv_person_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="29dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="9dp"
                     android:gravity="center_vertical"
                     android:text="赵子龙"
                     android:textColor="#000"/>
@@ -60,8 +60,8 @@
         <LinearLayout
             android:id="@+id/id_ll_person_no_login_header"
             android:layout_width="match_parent"
-            android:layout_height="82dp"
-            android:background="#d8d8d8"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_person_item_select"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -80,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="25dp"
-        android:background="#d8d8d8"
+        android:background="@drawable/bg_person_item_select"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -110,13 +110,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#454444"/>
+        android:background="#949393"/>
 
     <LinearLayout
         android:id="@+id/id_ll_person_my_read_history"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#d8d8d8"
+        android:background="@drawable/bg_person_item_select"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -148,6 +148,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="110dp"
+        android:background="@drawable/bg_person_item_select"
         android:gravity="center"
         android:text="注销"/>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.androidlongs.bookapplication.main.person;
+package com.androidlongs.bookapplication.main.person.frament;
 
 import android.content.Intent;
 import android.view.View;
@@ -11,6 +11,9 @@ import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.BaseFrament;
 import com.androidlongs.bookapplication.main.common.UserInfoInformationFunction;
 import com.androidlongs.bookapplication.main.common.UserInfoModel;
+import com.androidlongs.bookapplication.main.person.activity.MyBookSelfsActivity;
+import com.androidlongs.bookapplication.main.person.activity.MyReadHistoryActivity;
+import com.androidlongs.bookapplication.main.person.activity.PersonLoginActivity;
 import com.androidlongs.bookapplication.main.util.LogUtils;
 import com.androidlongs.bookapplication.main.util.ToastUtils;
 

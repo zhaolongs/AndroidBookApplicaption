@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="122dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_home_book_list_item_select"
+        android:orientation="vertical"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/id_iv_book_list_item_title"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/defaul_title"/>
+
+                <TextView
+
+                    android:id="@+id/id_book_list_item_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/id_iv_book_list_item_title"
+                    android:text="书名 ：大秦帝国"
+                    android:textColor="#161616"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/id_book_list_item_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/id_iv_book_list_item_title"
+                    android:layout_toRightOf="@id/id_iv_book_list_item_title"
+                    android:maxLines="1"
+                    android:text="作者 ： 赵子龙"
+                    android:textColor="#818080"
+                    android:textSize="14sp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:paddingRight="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="2dp"
+            android:background="#c9c8c8"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="6dp"
+            android:text="简介："
+            android:textColor="#818080"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="4dp"
+            android:fadeScrollbars="false"
+            android:scrollbars="vertical"
+            android:text="\t但事实并非如此，实际上Magic Leap所希望实现的是裸眼AR，而AR增强现实其实早在1990年就被提出，即实时地将虚拟世界套在现实世界上并进行互动，这种互动不一定是像Magic Leap构想的那样在现实环境中直接呈现，也可以在手机屏幕上实现"
+            android:textColor="#818080"
+            android:textSize="14sp"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.androidlongs.bookapplication.main.person;
+package com.androidlongs.bookapplication.main.person.activity;
 
 import android.content.Intent;
 import android.text.TextUtils;
