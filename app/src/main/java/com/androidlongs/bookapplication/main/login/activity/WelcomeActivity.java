@@ -1,6 +1,10 @@
 package com.androidlongs.bookapplication.main.login.activity;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
@@ -22,9 +26,7 @@ import com.androidlongs.bookapplication.main.util.LogUtils;
 public class WelcomeActivity extends BaseActivity {
 
 
-    private WelcomeFrament mWelcomeFrament;
-    private SelectLoginFrament mSelectLoginFrament;
-    private LoginFrament mLoginFrament;
+    private FragmentManager mFragmentManager;
 
     @Override
     public int getContentView() {
@@ -36,23 +38,22 @@ public class WelcomeActivity extends BaseActivity {
 
 
     }
+    private String mWelcomeTag = "welcomeTag";
+    private String mSelectLoginTag = "selectloginTag";
+    private String mLoginTag = "loginTag";
 
     @Override
     public void commonFunction() {
 
 
-        mWelcomeFrament = new WelcomeFrament();
-        getFragmentManager().beginTransaction()
-                .setCustomAnimations(R.animator.welcome_frament_in, R.animator.welcome_frament_out, R.animator.welcome_frament_in, R.animator.welcome_frament_out)
-                .addToBackStack("OtherFragment")
-                .replace(R.id.id_fl_activity_main_content, mWelcomeFrament)
-                .commit();
 
+        mFragmentManager = getFragmentManager();
+
+        selectPageFunction(mWelcomeTag);
 
         App.mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                initFramentFunction();
                 selectPageFunction();
             }
         }, 3000);
@@ -60,12 +61,72 @@ public class WelcomeActivity extends BaseActivity {
 
     }
 
-    private void initFramentFunction() {
-        //登录选择页面
-        mSelectLoginFrament = new SelectLoginFrament();
+
+    private  void selectPageFunction(String tag){
+        //从管理栈中取出对应标签的Frament
+
+        //欢迎页面
+        Fragment welcomeFrament = mFragmentManager.findFragmentByTag(mWelcomeTag);
+        //选择登录页面
+        Fragment selectFrament = mFragmentManager.findFragmentByTag(mSelectLoginTag);
         //登录页面
-        mLoginFrament = new LoginFrament();
+        Fragment loginFrament = mFragmentManager.findFragmentByTag(mLoginTag);
+
+        //获取
+        FragmentTransaction beginTransaction = mFragmentManager.beginTransaction();
+
+        //设置fragment切换动画
+        beginTransaction.setCustomAnimations(
+                R.animator.from_right,
+                R.animator.to_left,
+                R.animator.back_from_in,
+                R.animator.back_from_out);
+        //隐藏所有的fragment
+
+        if (welcomeFrament != null) {
+            beginTransaction.hide(welcomeFrament);
+        }
+
+        if (selectFrament != null) {
+            beginTransaction.hide(selectFrament);
+        }
+
+        if (loginFrament != null) {
+            beginTransaction.hide(loginFrament);
+        }
+
+        //显示或者创建当前要显示的页面
+        if (TextUtils.equals(tag,mWelcomeTag)){
+            //欢迎页面
+            if (welcomeFrament == null) {
+                welcomeFrament = new WelcomeFrament();
+                beginTransaction.add(R.id.id_fl_activity_main_content, welcomeFrament, mWelcomeTag);
+            }else {
+                beginTransaction.show(loginFrament);
+            }
+
+        }else if(TextUtils.equals(tag,mSelectLoginTag)){
+            //选择登录页面
+            if (selectFrament==null){
+                selectFrament = new SelectLoginFrament();
+                beginTransaction.add(R.id.id_fl_activity_main_content, selectFrament, mSelectLoginTag).addToBackStack(mSelectLoginTag);
+            }else {
+                beginTransaction.show(selectFrament);
+            }
+        }else {
+            //登录页面
+            if (loginFrament == null) {
+                loginFrament = new LoginFrament();
+                beginTransaction.add(R.id.id_fl_activity_main_content, loginFrament, mLoginTag).addToBackStack(mLoginTag);
+            }else {
+                beginTransaction.show(loginFrament);
+            }
+        }
+
+        //提交事务
+        beginTransaction.commit();
     }
+
 
     private void selectPageFunction() {
 
@@ -73,12 +134,7 @@ public class WelcomeActivity extends BaseActivity {
         Class clazz;
         if (userInfoModel == null) {
             //用户信息为null 跳转选择进入选择登录 页面
-            LogUtils.d(" 跳转选择进入选择登录 页面");
-            getFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.animator.welcome_frament_in, R.animator.welcome_frament_out, R.animator.welcome_frament_in, R.animator.welcome_frament_out)
-                    .addToBackStack("mSelectLoginFrament")
-                    .replace(R.id.id_fl_activity_main_content, mSelectLoginFrament)
-                    .commit();
+            selectPageFunction(mSelectLoginTag);
         } else {
             //用户信息不为null 跳转主页面
             clazz = HomeActivity.class;
@@ -94,16 +150,7 @@ public class WelcomeActivity extends BaseActivity {
     public void selectLoginFrament(){
         //用户信息为null 跳转选择进入选择登录 页面
         LogUtils.d(" 跳转选择进入登录 页面");
-        getFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(
-                        R.animator.welcome_frament_in,
-                        R.animator.welcome_frament_out,
-                        R.animator.welcome_frament_in,
-                        R.animator.welcome_frament_out)
-                .addToBackStack("mLoginFrament")
-                .replace(R.id.id_fl_activity_main_content, mLoginFrament)
-                .commit();
+        selectPageFunction(mLoginTag);
     }
 
     /**

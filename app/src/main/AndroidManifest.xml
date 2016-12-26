@@ -18,5 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".main.home.HomeActivity" android:theme="@style/FeelyouWindowAnimTheme"/>
+        <activity android:name=".main.person.activity.MyBookSelfsActivity"/>
+        <activity android:name=".main.person.activity.MyReadHistoryActivity"/>
+        <activity android:name=".main.person.activity.PersonLoginActivity"/>
     </application>
 </manifest>

@@ -1,14 +1,19 @@
 package com.androidlongs.bookapplication.main.login.frament;
 
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
@@ -43,6 +48,13 @@ public class LoginFrament extends BaseFrament {
     private CheckBox mCheckBox;
     private EditText mUserNameEditText;
     private EditText mPasswordEditText;
+    public LoginFrament(){
+        super();
+    }
+
+    public LoginFrament(String person) {
+       super();
+    }
 
     @Override
     public int getContentView() {
@@ -59,6 +71,7 @@ public class LoginFrament extends BaseFrament {
 
         mUserNameEditText = (EditText) view.findViewById(R.id.id_et_login_frament_username);
         mPasswordEditText = (EditText) view.findViewById(R.id.id_et_fragment_login_passwort);
+        view.setOnTouchListener(mOnTouchListener);
     }
 
     @Override
@@ -94,10 +107,36 @@ public class LoginFrament extends BaseFrament {
 
             }
         });
-    }
+
+
+        mUserNameEditText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+            @Override
+
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                // TODO Auto-generated method stub
+                LogUtils.d("enter done ");
+                if (actionId == EditorInfo.IME_ACTION_SEND)
+
+                {
+
+                    LogUtils.d("enter done 1");
+                    // 在这里编写自己想要实现的功能
+
+                }
+                return false;
+            }
+
+        });
+
+
+
+}
 
 
     private Call mLoginRequestCall;
+
     private void loginFunction() {
         String url = HttpHelper.sBaseUrl + "?tag=login";
 
@@ -114,18 +153,25 @@ public class LoginFrament extends BaseFrament {
 
 
             } else {
-                Toast.makeText(App.mContext, "密码不可为空", Toast.LENGTH_SHORT).show();
+                ToastUtils.show( "密码不可为空");
+
             }
         } else {
-            Toast.makeText(App.mContext, "用户名不可为空", Toast.LENGTH_SHORT).show();
+            ToastUtils.show( "用户名不可为空");
         }
 
     }
 
     private Callback loginCallback = new Callback() {
         @Override
-        public void onFailure(Request request, IOException e) {
+        public void onFailure(Request request, final IOException e) {
             LogUtils.e("登录失败 " + e.getMessage());
+            App.mHandler.post(new Runnable() {
+                @Override
+                public void run() {ToastUtils.show( "登录失败 " + e.getMessage());
+
+                }});
+
         }
 
         @Override
@@ -140,7 +186,7 @@ public class LoginFrament extends BaseFrament {
                 public void run() {
                     if (TextUtils.isEmpty(loginResponseModel.code)) {
                         LogUtils.d("登录  信息异常 " + result);
-                        ToastUtils.show( "登录  信息异常");
+                        ToastUtils.show("登录  信息异常");
                     } else if (TextUtils.equals(loginResponseModel.code, "1000")) {
 
                         if (loginResponseModel.content == null) {
@@ -157,13 +203,29 @@ public class LoginFrament extends BaseFrament {
 
                     } else {
                         LogUtils.e("登录失败");
-                        ToastUtils.show( "登录  信息异常" + loginResponseModel.message);
+                        ToastUtils.show("登录  信息异常" + loginResponseModel.message);
                     }
                 }
             });
 
         }
     };
+
+    private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            InputMethodManager manager = (InputMethodManager) LoginFrament.this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (LoginFrament.this.getActivity().getCurrentFocus() != null && LoginFrament.this.getActivity().getCurrentFocus().getWindowToken() != null) {
+                    manager.hideSoftInputFromWindow(LoginFrament.this.getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+            }
+
+            return true;
+        }
+    };
+
 
     @Override
     public void onDestroy() {

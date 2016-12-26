@@ -27,7 +27,13 @@ public class UserInfoInformationFunction extends BaseFunction {
 
     public static UserInfoModel sUserInfoModel;
 
+    /**
+     * 保存用户信息
+     *
+     * @param model 用户实体
+     */
     public void saveUserInfoModel(UserInfoModel model) {
+        sUserInfoModel = model;
         if (model != null) {
             String userInfation = mGson.toJson(model);
             //保存用户信息
@@ -61,8 +67,11 @@ public class UserInfoInformationFunction extends BaseFunction {
 
     }
 
+    /**
+     * 清除用户信息
+     */
     public void clearUserInfo() {
         sUserInfoModel = null;
-        mSharedPreferencesUtil.saveData(AppConfigFile.spUserName, "");
+        mSharedPreferencesUtil.removeData(AppConfigFile.spUserName);
     }
 }
