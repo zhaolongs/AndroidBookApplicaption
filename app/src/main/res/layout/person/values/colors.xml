@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="person_tiem_title_background">#86ad0f</color>
+    <color name="person_tiem_title_background_press">#75970a</color>
+
+    <color name="person_item_text_color">#403f3f</color>
+    <color name="person_item_text_hint_color">#919190</color>
+</resources>

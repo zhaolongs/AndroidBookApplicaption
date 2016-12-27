@@ -21,5 +21,6 @@
         <activity android:name=".main.person.activity.MyBookSelfsActivity"/>
         <activity android:name=".main.person.activity.MyReadHistoryActivity"/>
         <activity android:name=".main.person.activity.PersonLoginActivity"/>
+        <activity android:name=".main.person.activity.PersonMainActivity"/>
     </application>
 </manifest>

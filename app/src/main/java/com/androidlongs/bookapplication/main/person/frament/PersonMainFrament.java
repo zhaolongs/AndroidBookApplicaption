@@ -13,7 +13,6 @@ import com.androidlongs.bookapplication.main.common.UserInfoInformationFunction;
 import com.androidlongs.bookapplication.main.common.UserInfoModel;
 import com.androidlongs.bookapplication.main.person.activity.MyBookSelfsActivity;
 import com.androidlongs.bookapplication.main.person.activity.MyReadHistoryActivity;
-import com.androidlongs.bookapplication.main.person.activity.PersonLoginActivity;
 import com.androidlongs.bookapplication.main.util.LogUtils;
 import com.androidlongs.bookapplication.main.util.ToastUtils;
 
@@ -30,7 +29,6 @@ public class PersonMainFrament extends BaseFrament {
     private TextView mUserNameTextView;
     private TextView mDescTextView;
     private LinearLayout mLoginHeaderLinearLayout;
-    private LinearLayout mNoLoginHeaderLinearLayout;
     private Button mOutLoginButton;
     private LinearLayout mMyClassListLinearLayout;
     private LinearLayout mMyHistoryLinearLayout;
@@ -50,7 +48,7 @@ public class PersonMainFrament extends BaseFrament {
         mMyHistoryLinearLayout = (LinearLayout) view.findViewById(R.id.id_ll_person_my_read_history);
 
         mLoginHeaderLinearLayout = (LinearLayout) view.findViewById(R.id.id_ll_person_login_header);
-        mNoLoginHeaderLinearLayout = (LinearLayout) view.findViewById(R.id.id_ll_person_no_login_header);
+
 
         mOutLoginButton = (Button) view.findViewById(R.id.id_bt_person_out);
     }
@@ -89,15 +87,15 @@ public class PersonMainFrament extends BaseFrament {
             }
         });
 
-        mNoLoginHeaderLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogUtils.d("打开登录页面");
-                Intent intent = new Intent(PersonMainFrament.this.getActivity(), PersonLoginActivity.class);
-                intent.putExtra("tag","person_login_tag");
-                PersonMainFrament.this.startActivityForResult(intent, 1001);
-            }
-        });
+//        mNoLoginHeaderLinearLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                LogUtils.d("打开登录页面");
+//                Intent intent = new Intent(PersonMainFrament.this.getActivity(), PersonLoginActivity.class);
+//                intent.putExtra("tag","person_login_tag");
+//                PersonMainFrament.this.startActivityForResult(intent, 1001);
+//            }
+//        });
 
     }
 
@@ -105,13 +103,12 @@ public class PersonMainFrament extends BaseFrament {
 
         UserInfoModel userInfoModel = UserInfoInformationFunction.sUserInfoModel;
         if (userInfoModel == null) {
-            mNoLoginHeaderLinearLayout.setVisibility(View.VISIBLE);
             mLoginHeaderLinearLayout.setVisibility(View.GONE);
             mOutLoginButton.setVisibility(View.GONE);
             mMyClassListLinearLayout.setVisibility(View.GONE);
             mMyHistoryLinearLayout.setVisibility(View.GONE);
         } else {
-            mNoLoginHeaderLinearLayout.setVisibility(View.GONE);
+
             mLoginHeaderLinearLayout.setVisibility(View.VISIBLE);
             mMyClassListLinearLayout.setVisibility(View.VISIBLE);
             mMyHistoryLinearLayout.setVisibility(View.VISIBLE);

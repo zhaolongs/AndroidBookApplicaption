@@ -57,22 +57,6 @@
                 android:src="@mipmap/to"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/id_ll_person_no_login_header"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/bg_person_item_select"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="点击登录"
-                android:textColor="#000"
-                android:textSize="18sp"/>
-        </LinearLayout>
     </RelativeLayout>
     <!--我的书架-->
     <LinearLayout

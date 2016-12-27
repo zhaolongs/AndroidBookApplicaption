@@ -18,6 +18,7 @@ import com.androidlongs.bookapplication.main.forum.ForumMainFrament;
 import com.androidlongs.bookapplication.main.home.frament.HomeBookClassFrament;
 import com.androidlongs.bookapplication.main.home.frament.HomeBookListFrament;
 import com.androidlongs.bookapplication.main.login.frament.LoginFrament;
+import com.androidlongs.bookapplication.main.person.activity.PersonMainActivity;
 import com.androidlongs.bookapplication.main.person.frament.PersonMainFrament;
 import com.androidlongs.bookapplication.main.util.LogUtils;
 import com.androidlongs.bookapplication.main.util.ToastUtils;
@@ -241,21 +242,22 @@ public class HomeActivity extends BaseActivity {
         mFooterPersonLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCommonHeaderLinearLayout.setVisibility(View.VISIBLE);
-                mHomeHeaderLinearLayout.setVisibility(View.GONE);
-                onCheckedChanged(mTagPersonFrament, false);
-                mCommHeaderTitleTextView.setText("个人中心");
-
-                mFooterHomeTextView.setTextColor(mFooterLableNormalColor);
-                mFooterHomeImageView.setSelected(false);
-
-
-                mFooterFindTextView.setTextColor(mFooterLableNormalColor);
-                mFooterFindImageView.setSelected(false);
-                mFooterForumTextView.setTextColor(mFooterLableNormalColor);
-                mFooterForumImageView.setSelected(false);
-                mFooterPersonTextView.setTextColor(mFootertLablePressColor);
-                mFooterPersonImageView.setSelected(true);
+//                mCommonHeaderLinearLayout.setVisibility(View.VISIBLE);
+//                mHomeHeaderLinearLayout.setVisibility(View.GONE);
+//                onCheckedChanged(mTagPersonFrament, false);
+//                mCommHeaderTitleTextView.setText("个人中心");
+//
+//                mFooterHomeTextView.setTextColor(mFooterLableNormalColor);
+//                mFooterHomeImageView.setSelected(false);
+//
+//
+//                mFooterFindTextView.setTextColor(mFooterLableNormalColor);
+//                mFooterFindImageView.setSelected(false);
+//                mFooterForumTextView.setTextColor(mFooterLableNormalColor);
+//                mFooterForumImageView.setSelected(false);
+//                mFooterPersonTextView.setTextColor(mFootertLablePressColor);
+//                mFooterPersonImageView.setSelected(true);
+                HomeActivity.this.startActivity(new Intent(HomeActivity.this, PersonMainActivity.class));
 
             }
         });
