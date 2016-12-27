@@ -82,8 +82,8 @@ public class PersonMainActivity extends BaseActivity {
 
         } else {
 
-            String userName = userInfoModel.userName;
-            String desc = userInfoModel.desc;
+            String userName = userInfoModel.uname;
+            String desc = userInfoModel.udesc;
 
             mCurrentStatue = USER_LOGIN_STATUE.LOOGIN;
             mLoginTextView.setText("退出登录");
@@ -91,7 +91,7 @@ public class PersonMainActivity extends BaseActivity {
             mDescTextView.setText(""+desc);
 
             mReadHistoryTextView.setText("我的阅读记录");
-            mBookListTextView.setText("我的阅读记录");
+            mBookListTextView.setText("我的书架");
         }
 
     }

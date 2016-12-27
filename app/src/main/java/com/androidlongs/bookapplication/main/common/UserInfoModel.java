@@ -1,5 +1,10 @@
 package com.androidlongs.bookapplication.main.common;
 
+import com.androidlongs.bookapplication.main.home.model.BookModel;
+
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by androidlongs on 16/12/18.
  * 站在顶峰，看世界
@@ -7,20 +12,14 @@ package com.androidlongs.bookapplication.main.common;
  */
 
 public class UserInfoModel {
-    //帐号名
-    public String  userName;
-    //用户唯一标识
-    public String id;
-    //个性签名
-    public String desc;
-    //密码
-    public String password;
-    //性别
-    public String sex;
-    //年龄
-    public String age;
-    //电话
-    public String phone;
-    //头像地址
-    public String tltleImage;
+    public Integer uid;
+    public String userUUID;
+    
+    public String uname;
+    public String uage;
+    public String udesc;
+    public String usex;
+    public String upassword;
+    //我的书架
+    public Set<BookModel> uBookSet = new HashSet<>();
 }

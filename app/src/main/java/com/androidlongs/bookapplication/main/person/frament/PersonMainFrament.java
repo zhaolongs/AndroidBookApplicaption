@@ -114,8 +114,8 @@ public class PersonMainFrament extends BaseFrament {
             mMyHistoryLinearLayout.setVisibility(View.VISIBLE);
             mOutLoginButton.setVisibility(View.VISIBLE);
 
-            String userName = userInfoModel.userName;
-            String desc = userInfoModel.desc;
+            String userName = userInfoModel.uname;
+            String desc = userInfoModel.udesc;
 
             mUserNameTextView.setText("" + userName);
             mDescTextView.setText("" + desc);

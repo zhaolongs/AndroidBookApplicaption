@@ -95,7 +95,7 @@ public class PersonLoginActivity extends BaseActivity {
     private View.OnClickListener mSubmitOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String url = HttpHelper.sBaseUrl + "?tag=login";
+            String url = HttpHelper.sLoginUrl;
 
             String userName = mUserNameEditText.getText().toString().trim();
             String password = mPasswrodEditText.getText().toString().trim();
@@ -103,7 +103,7 @@ public class PersonLoginActivity extends BaseActivity {
             if (!TextUtils.isEmpty(userName)) {
                 if (!TextUtils.isEmpty(password)) {
                     Map<String, String> keyMap = new HashMap<>();
-                    keyMap.put("username", userName);
+                    keyMap.put("userName", userName);
                     keyMap.put("password", password);
                     mLoginRequestCall = OkhttpRequestUtils.getInstance().postRequest(url, keyMap, mLoginCallback);
                 } else {
@@ -129,38 +129,52 @@ public class PersonLoginActivity extends BaseActivity {
 
         @Override
         public void onResponse(Response response) throws IOException {
-            final String result = response.body().string();
-            LogUtils.d("登录 请求 成功 " + result);
-            final LoginResponseModel loginResponseModel = GsonUtil.parseJsonWithGson(result, LoginResponseModel.class);
-            LogUtils.d("解析数据 " + loginResponseModel.toString());
 
-            App.mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (TextUtils.isEmpty(loginResponseModel.code)) {
-                        LogUtils.d("登录  信息异常 " + result);
-                        ToastUtils.show("登录  信息异常");
-                    } else if (TextUtils.equals(loginResponseModel.code, "1000")) {
+            try {
 
-                        if (loginResponseModel.content == null) {
-                            LogUtils.d("登录  登录失败 " + result);
-                            ToastUtils.show("登录  登录失败 " + result);
+
+                final String result = response.body().string();
+                LogUtils.d("登录 请求 成功 " + result);
+                final LoginResponseModel loginResponseModel = GsonUtil.parseJsonWithGson(result, LoginResponseModel.class);
+                LogUtils.d("解析数据 " + loginResponseModel.toString());
+
+                App.mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (TextUtils.isEmpty(loginResponseModel.code)) {
+                            LogUtils.d("登录  信息异常 " + result);
+                            ToastUtils.show("登录  信息异常");
+                        } else if (TextUtils.equals(loginResponseModel.code, "1000")) {
+
+                            if (loginResponseModel.content == null) {
+                                LogUtils.d("登录  登录失败 " + result);
+                                ToastUtils.show("登录  登录失败 " + result);
+                            } else {
+                                LogUtils.d("登录  登录成功 " + result);
+                                App.sUserInfoModel = loginResponseModel.content;
+                                UserInfoInformationFunction.getInstance().saveUserInfoModel(loginResponseModel.content);
+                                Intent intent = new Intent();
+                                PersonLoginActivity.this.setResult(RESULT_OK, intent);
+                                PersonLoginActivity.this.finish();
+                            }
+
+
                         } else {
-                            LogUtils.d("登录  登录成功 " + result);
-                            App.sUserInfoModel = loginResponseModel.content;
-                            UserInfoInformationFunction.getInstance().saveUserInfoModel(loginResponseModel.content);
-                            Intent intent = new Intent();
-                            PersonLoginActivity.this.setResult(RESULT_OK, intent);
-                            PersonLoginActivity.this.finish();
+                            LogUtils.e("登录失败");
+                            ToastUtils.show("登录  信息异常" + loginResponseModel.message);
                         }
-
-
-                    } else {
-                        LogUtils.e("登录失败");
-                        ToastUtils.show("登录  信息异常" + loginResponseModel.message);
                     }
-                }
-            });
+                });
+
+            } catch (Exception e) {
+                LogUtils.e(" 解析异常 " + e.getMessage());
+                App.mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.show("登录异常");
+                    }
+                });
+            }
         }
     };
 
