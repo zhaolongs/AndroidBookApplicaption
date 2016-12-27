@@ -15,6 +15,7 @@ import com.androidlongs.bookapplication.main.net.HttpHelper;
 import com.androidlongs.bookapplication.main.net.OkhttpRequestUtils;
 import com.androidlongs.bookapplication.main.util.GsonUtil;
 import com.androidlongs.bookapplication.main.util.LogUtils;
+import com.androidlongs.bookapplication.main.util.ToastUtils;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -64,54 +65,67 @@ public class HomeBookClassFrament extends BaseFrament {
         }
 
 
-
         //加载 网络数据
         loadNetDatas();
     }
 
     private void loadNetDatas() {
-        String url = HttpHelper.sBaseUrl +"?tag=getBookClassList";
-        OkhttpRequestUtils.getInstance().getRequest(url,mBookClassCallback);
+        String url = HttpHelper.sBaseUrl + "?tag=getBookClassList";
+        OkhttpRequestUtils.getInstance().getRequest(url, mBookClassCallback);
     }
 
     private Callback mBookClassCallback = new Callback() {
         @Override
         public void onFailure(Request request, IOException e) {
-            LogUtils.e("加载异常  "+e.getMessage());
+            LogUtils.e("加载异常  " + e.getMessage());
         }
 
         @Override
         public void onResponse(Response response) throws IOException {
 
-            String string = response.body().string();
-            LogUtils.d("加载完成 "+string);
-            mBookClassModels = GsonUtil.parseJsonArrayWithGson(string, BookClassModel.class);
-            LogUtils.d("解析完成 "+mBookClassModels);
-            //更新本地数据
-            for (BookClassModel bookClassModel : mBookClassModels) {
-                mCommonBaseServiceInterface.addBookClassModel(bookClassModel);
-            }
-            //更新列表
-            App.mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-               setRecyListData();
+            try {
+
+
+                String string = response.body().string();
+                LogUtils.d("加载完成 " + string);
+                mBookClassModels = GsonUtil.parseJsonArrayWithGson(string, BookClassModel.class);
+                LogUtils.d("解析完成 " + mBookClassModels);
+                //更新本地数据
+                for (BookClassModel bookClassModel : mBookClassModels) {
+                    mCommonBaseServiceInterface.addBookClassModel(bookClassModel);
                 }
-            });
+                //更新列表
+                App.mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setRecyListData();
+                    }
+                });
+
+            } catch (Exception e) {
+                LogUtils.e("解析 异常 " + e.getMessage());
+                App.mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.show("解析 异常 home book class ");
+                    }
+                });
+            }
         }
     };
     private List<BookClassModel> mBookClassModels = new ArrayList<>();
+
     private void setRecyListData() {
-        if (mBookClassAdapter==null) {
+        if (mBookClassAdapter == null) {
             mBookClassAdapter = new HomeBookClassAdapter(mBookClassModels);
             mRecyclerView.setAdapter(mBookClassAdapter);
             //设置布局模式
-            GridLayoutManager layoutManager = new GridLayoutManager(this.getActivity(),2);
+            GridLayoutManager layoutManager = new GridLayoutManager(this.getActivity(), 2);
             //设置滚动模式为竖直方向
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(layoutManager);
 
-        }else {
+        } else {
             mBookClassAdapter.setDatas(mBookClassModels);
             mBookClassAdapter.notifyDataSetChanged();
         }

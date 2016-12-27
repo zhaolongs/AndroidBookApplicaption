@@ -15,6 +15,7 @@ import com.androidlongs.bookapplication.main.net.HttpHelper;
 import com.androidlongs.bookapplication.main.net.OkhttpRequestUtils;
 import com.androidlongs.bookapplication.main.util.GsonUtil;
 import com.androidlongs.bookapplication.main.util.LogUtils;
+import com.androidlongs.bookapplication.main.util.ToastUtils;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -83,23 +84,31 @@ public class HomeBookListFrament extends BaseFrament {
         public void onResponse(Response response) throws IOException {
 
 
-
             String string = response.body().string();
             LogUtils.d(string);
             if (!TextUtils.isEmpty(string)) {
-                mBookModelList = GsonUtil.parseJsonArrayWithGson(string, BookModel.class);
-                //保存到数据库
-                for (BookModel bookModel : mBookModelList) {
-
-                    mCommonBaseServiceInterface.addBookModel(bookModel);
-                }
-                App.mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setRecyclerListData();
+                try {
+                    mBookModelList = GsonUtil.parseJsonArrayWithGson(string, BookModel.class);
+                    //保存到数据库
+                    for (BookModel bookModel : mBookModelList) {
+                        mCommonBaseServiceInterface.addBookModel(bookModel);
                     }
-                });
+                    App.mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setRecyclerListData();
+                        }
+                    });
+                } catch (final Exception e) {
+                    App.mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            LogUtils.e(" 解析异常 " + e.getMessage());
+                            ToastUtils.show("解析异常 home:book");
+                        }
+                    });
 
+                }
             }
         }
     };
@@ -111,7 +120,7 @@ public class HomeBookListFrament extends BaseFrament {
 
         List<BaseModel> baseModels = mCommonBaseServiceInterface.queryAllBookModel();
         for (BaseModel baseModel : baseModels) {
-            mBookModelList.add((BookModel)baseModel);
+            mBookModelList.add((BookModel) baseModel);
         }
         setRecyclerListData();
 

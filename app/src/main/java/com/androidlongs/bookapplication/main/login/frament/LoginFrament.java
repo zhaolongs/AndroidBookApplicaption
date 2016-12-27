@@ -138,7 +138,7 @@ public class LoginFrament extends BaseFrament {
     private Call mLoginRequestCall;
 
     private void loginFunction() {
-        String url = HttpHelper.sBaseUrl + "?tag=login";
+        String url = HttpHelper.sLoginUrl;
 
         String userName = mUserNameEditText.getText().toString().trim();
         String password = mPasswordEditText.getText().toString().trim();
@@ -146,7 +146,7 @@ public class LoginFrament extends BaseFrament {
         if (!TextUtils.isEmpty(userName)) {
             if (!TextUtils.isEmpty(password)) {
                 Map<String, String> keyMap = new HashMap<>();
-                keyMap.put("username", userName);
+                keyMap.put("userName", userName);
                 keyMap.put("password", password);
 
                 mLoginRequestCall = OkhttpRequestUtils.getInstance().postRequest(url, keyMap, loginCallback);

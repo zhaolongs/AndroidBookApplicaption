@@ -300,22 +300,6 @@ public class HomeActivity extends BaseActivity {
         } else {
 
         }
-//        if (flag) {
-//            if (TextUtils.equals(tag, mTagHomeBookList)) {
-//                ft.setCustomAnimations(
-//                        R.animator.home_book_list_show,
-//                        R.animator.home_book_list_hide,
-//                        R.animator.back_from_in,
-//                        R.animator.back_from_out);
-//            } else {
-//                ft.setCustomAnimations(
-//                        R.animator.from_right,
-//                        R.animator.to_left,
-//                        R.animator.back_from_in,
-//                        R.animator.back_from_out);
-//            }
-//
-//        }
 
         //当前页面
         mCurrentTagFrament = tag;
@@ -409,6 +393,40 @@ public class HomeActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             LogUtils.d("home activity result is function ");
+
+        }
+
+    }
+
+    private long mLastBackTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        LogUtils.d("back pressd " +mLastBackTime);
+
+        if (TextUtils.equals(mCurrentTagFrament, mTagHomeBookClass)) {
+            mCurrentTagFrament = mHeaderTagHomeBookList;
+            if (this.getFragmentManager().getBackStackEntryCount() > 0) {
+                this.getFragmentManager().popBackStack();
+            }
+        } else {
+
+            long  currentTime =   System.currentTimeMillis();
+            long flagTime = currentTime  - mLastBackTime;
+
+
+            LogUtils.d("back pressd last time is  " +mLastBackTime+"\n current "+currentTime+"\n flagTime "+flagTime);
+            if (mLastBackTime <= 0) {
+                mLastBackTime = System.currentTimeMillis();
+                ToastUtils.show("再点一次 退出程序");
+            } else if (flagTime > 3000) {
+                mLastBackTime = System.currentTimeMillis();
+                ToastUtils.show("再点一次 退出程序");
+            } else if(flagTime<=3000&&flagTime>0){
+                App.mHandler.removeCallbacksAndMessages(0);
+                this.finish();
+            }
 
         }
 
