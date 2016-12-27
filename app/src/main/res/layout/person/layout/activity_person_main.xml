@@ -26,6 +26,7 @@
                     android:src="@mipmap/per_header"/>
 
                 <ImageView
+                    android:id="@+id/id_iv_person_activity_back"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"

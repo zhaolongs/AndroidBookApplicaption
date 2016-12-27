@@ -2,6 +2,7 @@ package com.androidlongs.bookapplication.main.person.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class PersonMainActivity extends BaseActivity {
     private TextView mDescTextView;
     private TextView mReadHistoryTextView;
     private TextView mBookListTextView;
+    private ImageView mBackImageView;
 
     @Override
     public int getContentView() {
@@ -48,6 +50,8 @@ public class PersonMainActivity extends BaseActivity {
         mDescTextView = (TextView) findViewById(R.id.id_ll_activity_person_my_desc);
         mReadHistoryTextView = (TextView)findViewById(R.id.id_tv_activity_person_my_read_history);
         mBookListTextView = (TextView)findViewById(R.id.id_tv_activity_person_my_book_list);
+
+        mBackImageView = (ImageView ) findViewById(R.id.id_iv_person_activity_back);
     }
 
     @Override
@@ -55,7 +59,7 @@ public class PersonMainActivity extends BaseActivity {
         mLoginLinearLayout.setOnClickListener(mOnClickListener);
         mMyBookListLinearLayout.setOnClickListener(mBookListOnClickListener);
         mMyReadHistoryLinearLayout.setOnClickListener(mReadHistoryOnClickListener);
-
+        mBackImageView.setOnClickListener(mBackOnClickListener);
 
         selectPageShowFunction();
     }
@@ -163,6 +167,12 @@ public class PersonMainActivity extends BaseActivity {
         }
 
 
+    };
+    private View.OnClickListener mBackOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            PersonMainActivity.this.finish();
+        }
     };
 
 
