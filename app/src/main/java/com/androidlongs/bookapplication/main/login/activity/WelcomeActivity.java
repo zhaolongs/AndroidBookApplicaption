@@ -9,12 +9,12 @@ import android.text.TextUtils;
 import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
 import com.androidlongs.bookapplication.base.BaseActivity;
+import com.androidlongs.bookapplication.main.common.UserInfoInformationFunction;
 import com.androidlongs.bookapplication.main.common.UserInfoModel;
 import com.androidlongs.bookapplication.main.home.HomeActivity;
-import com.androidlongs.bookapplication.main.common.UserInfoInformationFunction;
-import com.androidlongs.bookapplication.main.login.frament.LoginFrament;
 import com.androidlongs.bookapplication.main.login.frament.SelectLoginFrament;
 import com.androidlongs.bookapplication.main.login.frament.WelcomeFrament;
+import com.androidlongs.bookapplication.main.person.activity.PersonLoginActivity;
 import com.androidlongs.bookapplication.main.util.LogUtils;
 
 /**
@@ -115,12 +115,11 @@ public class WelcomeActivity extends BaseActivity {
             }
         }else {
             //登录页面
-            if (loginFrament == null) {
-                loginFrament = new LoginFrament();
-                beginTransaction.add(R.id.id_fl_activity_main_content, loginFrament, mLoginTag).addToBackStack(mLoginTag);
-            }else {
-                beginTransaction.show(loginFrament);
-            }
+            Intent intent  = new Intent(WelcomeActivity.this, PersonLoginActivity.class);
+            intent.putExtra("tag","welcome_tag");
+            WelcomeActivity.this.startActivity(intent);
+            WelcomeActivity.this.finish();
+            return;
         }
 
         //提交事务

@@ -47,6 +47,7 @@ public class PersonLoginActivity extends BaseActivity {
     }
 
     private String mPersonLoginTag = "person_login_tag";
+    private String mWelcomeTag = "welcome_tag";
     private String mCurrentTag = mPersonLoginTag;
 
     @Override
@@ -79,6 +80,9 @@ public class PersonLoginActivity extends BaseActivity {
             if (TextUtils.equals(tag, "person_login_tag")) {
                 //个人登录页面
                 mCurrentTag = mPersonLoginTag;
+            } else if (TextUtils.equals(tag, "welcome_tag")) {
+                //个人登录页面
+                mCurrentTag = mWelcomeTag;
             }
         }
     }
@@ -122,7 +126,16 @@ public class PersonLoginActivity extends BaseActivity {
     private View.OnClickListener mRegistOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            PersonLoginActivity.this.startActivity(new Intent(PersonLoginActivity.this, RegisetrActivity.class));
+            Intent intent = new Intent(PersonLoginActivity.this, RegisetrActivity.class);
+            if (TextUtils.equals("person_login_tag", mCurrentTag)) {
+                intent.putExtra("tag", "home");
+                PersonLoginActivity.this.startActivity(intent);
+                PersonLoginActivity.this.finish();
+            } else if (TextUtils.equals("welcome_tag", mCurrentTag)) {
+                intent.putExtra("tag", "welcome");
+                PersonLoginActivity.this.startActivity(intent);
+
+            }
         }
     };
     private Callback mLoginCallback = new Callback() {

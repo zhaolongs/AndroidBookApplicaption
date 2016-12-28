@@ -63,6 +63,16 @@ public class RegisetrActivity extends BaseActivity {
     @Override
     public void commonFunction() {
 
+        Intent intent = getIntent();
+        String tag = intent.getStringExtra("tag");
+        if (TextUtils.isEmpty(tag)) {
+            mCurrentRegisType = REGISETR_TYPE.WELCOME_PAGE;
+        }else if (TextUtils.equals(tag,"home")){
+            mCurrentRegisType  = REGISETR_TYPE.HOME_PAGE;
+        }else  if(TextUtils.equals("welcome",tag)){
+            mCurrentRegisType = REGISETR_TYPE.WELCOME_PAGE;
+        }
+
         mBackImageView.setOnClickListener(mBackOnClickListener);
         mTitleImageView.setOnClickListener(mSelectTitleImageOnClickListener);
         mRegisterLinearLayout.setOnClickListener(mRegisterOnClickListener);
