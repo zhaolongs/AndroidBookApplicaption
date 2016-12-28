@@ -62,8 +62,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="46dp"
         android:background="@drawable/bg_person_item_select_2"
-        android:clickable="true"
-        android:focusable="true"
+        android:clickable="false"
+        android:focusable="false"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -147,8 +147,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/bg_person_item_select_2"
-        android:clickable="true"
-        android:focusable="true"
+        android:clickable="false"
+        android:focusable="false"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -189,8 +189,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/bg_person_item_select_2"
-        android:clickable="true"
-        android:focusable="true"
+        android:clickable="false"
+        android:focusable="false"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 

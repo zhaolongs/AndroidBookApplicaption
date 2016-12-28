@@ -11,6 +11,7 @@ import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
 import com.androidlongs.bookapplication.base.BaseActivity;
 import com.androidlongs.bookapplication.main.common.UserInfoInformationFunction;
+import com.androidlongs.bookapplication.main.home.HomeActivity;
 import com.androidlongs.bookapplication.main.login.activity.RegisetrActivity;
 import com.androidlongs.bookapplication.main.login.model.LoginResponseModel;
 import com.androidlongs.bookapplication.main.net.HttpHelper;
@@ -46,10 +47,12 @@ public class PersonLoginActivity extends BaseActivity {
         return R.layout.activity_person_login;
     }
 
-    private String mPersonLoginTag = "person_login_tag";
-    private String mWelcomeTag = "welcome_tag";
-    private String mCurrentTag = mPersonLoginTag;
 
+
+    private LoginType mcurrentLoginType = LoginType.WELCOME;
+    private enum LoginType{
+        WELCOME,HOME,
+    }
     @Override
     public void initView() {
         //返回
@@ -79,11 +82,13 @@ public class PersonLoginActivity extends BaseActivity {
         if (!TextUtils.isEmpty(tag)) {
             if (TextUtils.equals(tag, "person_login_tag")) {
                 //个人登录页面
-                mCurrentTag = mPersonLoginTag;
+               mcurrentLoginType = LoginType.HOME;
             } else if (TextUtils.equals(tag, "welcome_tag")) {
                 //个人登录页面
-                mCurrentTag = mWelcomeTag;
+               mcurrentLoginType = LoginType.WELCOME;
             }
+        }else {
+            mcurrentLoginType = LoginType.WELCOME;
         }
     }
 
@@ -127,15 +132,22 @@ public class PersonLoginActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(PersonLoginActivity.this, RegisetrActivity.class);
-            if (TextUtils.equals("person_login_tag", mCurrentTag)) {
-                intent.putExtra("tag", "home");
-                PersonLoginActivity.this.startActivity(intent);
-                PersonLoginActivity.this.finish();
-            } else if (TextUtils.equals("welcome_tag", mCurrentTag)) {
-                intent.putExtra("tag", "welcome");
-                PersonLoginActivity.this.startActivity(intent);
 
+
+            switch (mcurrentLoginType){
+                case WELCOME:
+                    intent.putExtra("tag", "welcome");
+                    PersonLoginActivity.this.startActivity(intent);
+                    break;
+                case HOME:
+                    intent.putExtra("tag", "home");
+                    PersonLoginActivity.this.startActivity(intent);
+                    PersonLoginActivity.this.finish();
+                    break;
+                default:
+                    break;
             }
+
         }
     };
     private Callback mLoginCallback = new Callback() {
@@ -170,16 +182,34 @@ public class PersonLoginActivity extends BaseActivity {
                             ToastUtils.show("登录  信息异常");
                         } else if (TextUtils.equals(loginResponseModel.code, "1000")) {
 
+
                             if (loginResponseModel.content == null) {
                                 LogUtils.d("登录  登录失败 " + result);
                                 ToastUtils.show("登录  登录失败 " + result);
                             } else {
-                                LogUtils.d("登录  登录成功 " + result);
-                                App.sUserInfoModel = loginResponseModel.content;
-                                UserInfoInformationFunction.getInstance().saveUserInfoModel(loginResponseModel.content);
-                                Intent intent = new Intent();
-                                PersonLoginActivity.this.setResult(RESULT_OK, intent);
-                                PersonLoginActivity.this.finish();
+
+
+                                switch (mcurrentLoginType){
+                                    case WELCOME:
+                                        LogUtils.d("登录  登录成功 " + result);
+                                        App.sUserInfoModel = loginResponseModel.content;
+                                        UserInfoInformationFunction.getInstance().saveUserInfoModel(loginResponseModel.content);
+                                        Intent intent = new Intent(PersonLoginActivity.this, HomeActivity.class);
+                                        PersonLoginActivity.this.startActivity(intent);
+                                        PersonLoginActivity.this.finish();
+                                        break;
+                                    case HOME:
+                                        LogUtils.d("登录  登录成功 " + result);
+                                        App.sUserInfoModel = loginResponseModel.content;
+                                        UserInfoInformationFunction.getInstance().saveUserInfoModel(loginResponseModel.content);
+                                        PersonLoginActivity.this.setResult(RESULT_OK, new Intent());
+                                        PersonLoginActivity.this.finish();
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+
                             }
 
 

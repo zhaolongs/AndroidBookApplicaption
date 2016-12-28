@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
@@ -43,6 +44,7 @@ public class RegisetrActivity extends BaseActivity {
     private EditText mPassword2EditText;
     private LinearLayout mRegisterLinearLayout;
     private Call mCall;
+    private Spinner mSexSpinner;
 
     @Override
     public int getContentView() {
@@ -58,6 +60,8 @@ public class RegisetrActivity extends BaseActivity {
         mPasswordEditText = (EditText) findViewById(R.id.id_et_register_user_password);
         mPassword2EditText = (EditText) findViewById(R.id.id_et_register_user_password_2);
         mRegisterLinearLayout = (LinearLayout) findViewById(R.id.id_ll_regist);
+
+        mSexSpinner = (Spinner) findViewById(R.id.id_et_register_user_sex);
     }
 
     @Override
@@ -120,16 +124,16 @@ public class RegisetrActivity extends BaseActivity {
             ToastUtils.show("请再次输入密码");
             return;
         }
-        if (TextUtils.equals(password1, password2)) {
+        if (!TextUtils.equals(password1, password2)) {
             ToastUtils.show("两次输入的密码不一致");
             return;
         }
 
         //封装参数
         Map<String, String> keyParamMap = new HashMap<>();
-        keyParamMap.put("userNmae", userName);
+        keyParamMap.put("userName", userName);
         keyParamMap.put("password", password1);
-
+        keyParamMap.put("sex", mSexSpinner.getSelectedItem().toString());
 
         String url = HttpHelper.sRegisterUrl;
 
@@ -151,6 +155,7 @@ public class RegisetrActivity extends BaseActivity {
 
             try{
                 String string = response.body().string();
+                LogUtils.d(""+string);
                 if (TextUtils.isEmpty(string)) {
                     LogUtils.e("注册异常 ");
                     registerFaileFunctino(null);
