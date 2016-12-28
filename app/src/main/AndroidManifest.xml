@@ -22,5 +22,6 @@
         <activity android:name=".main.person.activity.MyReadHistoryActivity"/>
         <activity android:name=".main.person.activity.PersonLoginActivity"/>
         <activity android:name=".main.person.activity.PersonMainActivity"/>
+        <activity android:name=".main.login.activity.RegisetrActivity"/>
     </application>
 </manifest>

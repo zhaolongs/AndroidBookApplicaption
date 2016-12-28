@@ -10,4 +10,5 @@ public class HttpHelper {
     public static  String sBaseUrl = "http://192.168.0.101:10008//Book/";
 
     public static  String sLoginUrl = sBaseUrl+"/moble/login";
+    public static  String sRegisterUrl = sBaseUrl+"/moble/regiseter";
 }

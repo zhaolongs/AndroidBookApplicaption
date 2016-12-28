@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">wisdom</string>
     <string name="app_comm">wisdom</string>
+
+    <string-array name="user_sex">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
 </resources>

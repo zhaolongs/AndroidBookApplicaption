@@ -3,14 +3,15 @@ package com.androidlongs.bookapplication.main.person.activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
 import com.androidlongs.bookapplication.base.BaseActivity;
 import com.androidlongs.bookapplication.main.common.UserInfoInformationFunction;
+import com.androidlongs.bookapplication.main.login.activity.RegisetrActivity;
 import com.androidlongs.bookapplication.main.login.model.LoginResponseModel;
 import com.androidlongs.bookapplication.main.net.HttpHelper;
 import com.androidlongs.bookapplication.main.net.OkhttpRequestUtils;
@@ -37,7 +38,8 @@ public class PersonLoginActivity extends BaseActivity {
     private LinearLayout mBackLinearLayout;
     private EditText mUserNameEditText;
     private EditText mPasswrodEditText;
-    private Button mSubmitButton;
+    private LinearLayout mloginLinearLayout;
+    private TextView mRegisterTextView;
 
     @Override
     public int getContentView() {
@@ -52,10 +54,10 @@ public class PersonLoginActivity extends BaseActivity {
         //返回
         mBackLinearLayout = (LinearLayout) findViewById(R.id.id_ll_person_login_back);
 
-        mUserNameEditText = (EditText) findViewById(R.id.id_et_person_login_username);
-        mPasswrodEditText = (EditText) findViewById(R.id.id_et_person_login_password);
-
-        mSubmitButton = (Button) findViewById(R.id.id_bt_person_login_submit);
+        mUserNameEditText = (EditText) findViewById(R.id.id_et_login_user_name);
+        mPasswrodEditText = (EditText) findViewById(R.id.id_et_login_password);
+        mloginLinearLayout = (LinearLayout) findViewById(R.id.id_ll_login);
+        mRegisterTextView = (TextView) findViewById(R.id.id_tv_login_register);
     }
 
 
@@ -64,8 +66,9 @@ public class PersonLoginActivity extends BaseActivity {
         initParamFunction();
 
 
+        mRegisterTextView.setOnClickListener(mRegistOnClickListener);
         mBackLinearLayout.setOnClickListener(mBakcOnClickListener);
-        mSubmitButton.setOnClickListener(mSubmitOnClickListener);
+        mloginLinearLayout.setOnClickListener(mSubmitOnClickListener);
     }
 
     //参数 处理
@@ -112,6 +115,14 @@ public class PersonLoginActivity extends BaseActivity {
             } else {
                 ToastUtils.show("用户名不可为空");
             }
+        }
+    };
+
+    //注册页面进入
+    private View.OnClickListener mRegistOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            PersonLoginActivity.this.startActivity(new Intent(PersonLoginActivity.this, RegisetrActivity.class));
         }
     };
     private Callback mLoginCallback = new Callback() {

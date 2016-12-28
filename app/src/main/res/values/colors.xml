@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="common_base_color">#efefef</color>
+    <color name="common_base_item_background">#86ad0f</color>
+    <color name="common_base_item_background_press">#75970a</color>
+
+
+
+    <color name="color2">#b9ef16</color>
+    <color name="color3">#9ecc12</color>
+    <color name="color4">#93be11</color>
+    <color name="color5">#92bc00</color>
+    <color name="color6">#86ad0f</color>
+    <color name="color7">#7a9e0e</color>
+    <color name="color8">#789b0e</color>
+    <color name="color9">#648109</color>
+
 
 </resources>
