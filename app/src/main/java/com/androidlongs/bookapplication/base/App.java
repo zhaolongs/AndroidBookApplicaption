@@ -6,6 +6,8 @@ import android.os.Handler;
 
 import com.androidlongs.bookapplication.main.common.UserInfoModel;
 
+import cn.smssdk.SMSSDK;
+
 /**
  * Created by androidlongs on 16/12/18.
  * 站在顶峰，看世界
@@ -28,6 +30,13 @@ public class App extends Application {
 
         initDbFunction();
 
+        initSMSSFunction();
+
+    }
+
+    //短信分享功能
+    private void initSMSSFunction() {
+        SMSSDK.initSDK(this, AppConfigFile.sSSMSAppKey, AppConfigFile.sSSMSSecret);
     }
 
     private void initDbFunction() {

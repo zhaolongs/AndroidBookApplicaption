@@ -13,6 +13,7 @@ import com.androidlongs.bookapplication.base.BaseActivity;
 import com.androidlongs.bookapplication.main.common.UserInfoInformationFunction;
 import com.androidlongs.bookapplication.main.home.HomeActivity;
 import com.androidlongs.bookapplication.main.login.activity.RegisetrActivity;
+import com.androidlongs.bookapplication.main.login.activity.SmssLoginActivity;
 import com.androidlongs.bookapplication.main.login.model.LoginResponseModel;
 import com.androidlongs.bookapplication.main.net.HttpHelper;
 import com.androidlongs.bookapplication.main.net.OkhttpRequestUtils;
@@ -41,6 +42,7 @@ public class PersonLoginActivity extends BaseActivity {
     private EditText mPasswrodEditText;
     private LinearLayout mloginLinearLayout;
     private TextView mRegisterTextView;
+    private LinearLayout mMSSMSLoginLinearLayout;
 
     @Override
     public int getContentView() {
@@ -62,6 +64,9 @@ public class PersonLoginActivity extends BaseActivity {
         mPasswrodEditText = (EditText) findViewById(R.id.id_et_login_password);
         mloginLinearLayout = (LinearLayout) findViewById(R.id.id_ll_login);
         mRegisterTextView = (TextView) findViewById(R.id.id_tv_login_register);
+
+
+        mMSSMSLoginLinearLayout = (LinearLayout) findViewById(R.id.id_ll_ssms_login);
     }
 
 
@@ -70,6 +75,7 @@ public class PersonLoginActivity extends BaseActivity {
         initParamFunction();
 
 
+        mMSSMSLoginLinearLayout.setOnClickListener(mSSMSOnClickListener);
         mRegisterTextView.setOnClickListener(mRegistOnClickListener);
         mBackLinearLayout.setOnClickListener(mBakcOnClickListener);
         mloginLinearLayout.setOnClickListener(mSubmitOnClickListener);
@@ -102,6 +108,20 @@ public class PersonLoginActivity extends BaseActivity {
         }
     };
 
+
+    //短信登录
+    private View.OnClickListener mSSMSOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            SSMSLoginFunction();
+        }
+    };
+    //短信登录
+    private void SSMSLoginFunction() {
+        Intent intent = new Intent(PersonLoginActivity.this, SmssLoginActivity.class);
+        PersonLoginActivity.this.startActivity(intent);
+
+    }
 
     private Call mLoginRequestCall;
     private View.OnClickListener mSubmitOnClickListener = new View.OnClickListener() {
@@ -240,5 +260,6 @@ public class PersonLoginActivity extends BaseActivity {
                 mLoginRequestCall.cancel();
             }
         }
+
     }
 }

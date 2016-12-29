@@ -10,4 +10,8 @@ public class AppConfigFile {
     public static String cacheFileName = "sp_book";
     public static String spUserName = "sp_user_name";
     public static boolean isDubug = true;
+
+
+    public static  String sSSMSAppKey = "1a62c97aba120";
+    public static String sSSMSSecret = "cdeea7ba0d0c8c89a29d33fca17812d8";
 }
