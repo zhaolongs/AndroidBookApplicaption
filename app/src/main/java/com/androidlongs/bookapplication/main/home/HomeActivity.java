@@ -14,7 +14,7 @@ import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
 import com.androidlongs.bookapplication.base.BaseActivity;
 import com.androidlongs.bookapplication.main.find.FindMainFrament;
-import com.androidlongs.bookapplication.main.forum.ForumMainFrament;
+import com.androidlongs.bookapplication.main.forum.frament.ForumMainFrament;
 import com.androidlongs.bookapplication.main.home.frament.HomeBookClassFrament;
 import com.androidlongs.bookapplication.main.home.frament.HomeBookListFrament;
 import com.androidlongs.bookapplication.main.login.frament.LoginFrament;

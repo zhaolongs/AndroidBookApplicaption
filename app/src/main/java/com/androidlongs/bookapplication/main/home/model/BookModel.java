@@ -1,8 +1,11 @@
 package com.androidlongs.bookapplication.main.home.model;
 
 import com.androidlongs.bookapplication.base.BaseModel;
+import com.androidlongs.bookapplication.main.common.UserInfoModel;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by androidlongs on 16/12/19.
@@ -19,7 +22,7 @@ import java.io.Serializable;
  */
 
 public class BookModel extends BaseModel implements Serializable {
-    private static final long serialVersionUID = 1L;
+    public static final long serialVersionUID = 1L;
 
     /**
      * 基础属性注解
@@ -32,13 +35,17 @@ public class BookModel extends BaseModel implements Serializable {
      *@Unique：向数据库列添加了一个唯一的约束
      */
 
-    public String id;
-    public String name;
-    public String author;
-    public String description;
-    public String path;
+    public Integer bid;
+    public String uuid;
+    public String bname;
+    public String bauthor;
+    public String bdesc;
+    
+    public Set<UserInfoModel> bUserSet = new HashSet<>();
+
+    public Set<BookClassModel> bBookClassSet = new HashSet<>();
+
+
+    public String bpath;
     public String filename;
-
-    public BookClassModel category;
-
 }

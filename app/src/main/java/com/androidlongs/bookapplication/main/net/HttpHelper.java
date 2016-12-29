@@ -11,4 +11,7 @@ public class HttpHelper {
 
     public static  String sLoginUrl = sBaseUrl+"/moble/login";
     public static  String sRegisterUrl = sBaseUrl+"/moble/regiseter";
+    public static String sHomeBookListUrl = sBaseUrl +"/book/list";
+
+    public static  String sForumListUrl = sBaseUrl +"/froum/list";
 }

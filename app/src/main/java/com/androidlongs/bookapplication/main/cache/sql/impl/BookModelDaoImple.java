@@ -9,7 +9,6 @@ import com.androidlongs.bookapplication.main.cache.sql.DBManagerHelper;
 import com.androidlongs.bookapplication.main.cache.sql.DBManagerUtils;
 import com.androidlongs.bookapplication.main.cache.sql.dao.BookClassModelDao;
 import com.androidlongs.bookapplication.main.cache.sql.dao.BookModelDao;
-import com.androidlongs.bookapplication.main.home.model.BookClassModel;
 import com.androidlongs.bookapplication.main.home.model.BookModel;
 import com.androidlongs.bookapplication.main.util.LogUtils;
 
@@ -38,25 +37,25 @@ public class BookModelDaoImple implements BookModelDao {
         StringBuilder builder = new StringBuilder();
         builder.append(inserSql);
         builder.append(" \"");
-        builder.append(bookModel.id);
+        builder.append(bookModel.uuid);
         builder.append("\", \"");
-        builder.append(bookModel.name);
+        builder.append(bookModel.bname);
         builder.append("\", \"");
-        builder.append(bookModel.author);
+        builder.append(bookModel.bauthor);
         builder.append("\", \"");
-        builder.append(bookModel.description);
+        builder.append(bookModel.bdesc);
         builder.append("\", \"");
-        builder.append(bookModel.path);
+        builder.append(bookModel.bpath);
         builder.append("\", \"");
         builder.append(bookModel.filename);
         builder.append("\", \"");
-        builder.append(bookModel.category);
+        builder.append("");
         builder.append("\", \"");
         builder.append(new Date().getTime() + "");
         builder.append("\" )");
 
         inserSql = builder.toString().trim();
-        BaseModel baseModel = queryModel(bookModel.name);
+        BaseModel baseModel = queryModel(bookModel.bname);
         if (baseModel == null) {
             LogUtils.d("数据库 新增书籍 "+inserSql);
             DBManagerUtils.getInstance().exeData(inserSql);
@@ -79,16 +78,16 @@ public class BookModelDaoImple implements BookModelDao {
         if (cursor != null) {
             BookModel bookModel = new BookModel();
             while (cursor.moveToNext()) {
-                bookModel.id = cursor.getString(cursor.getColumnIndex("id"));
-                bookModel.name = cursor.getString(cursor.getColumnIndex("name"));
-                bookModel.author = cursor.getString(cursor.getColumnIndex("author"));
-                bookModel.description = cursor.getString(cursor.getColumnIndex("description"));
+                bookModel.uuid = cursor.getString(cursor.getColumnIndex("id"));
+                bookModel.bname = cursor.getString(cursor.getColumnIndex("name"));
+                bookModel.bauthor = cursor.getString(cursor.getColumnIndex("author"));
+                bookModel.bdesc = cursor.getString(cursor.getColumnIndex("description"));
                 bookModel.filename = cursor.getString(cursor.getColumnIndex("filename"));
-                bookModel.path = cursor.getString(cursor.getColumnIndex("path"));
+                bookModel.bpath = cursor.getString(cursor.getColumnIndex("path"));
                 String categoryId = cursor.getString(cursor.getColumnIndex("categoryId"));
                 if (!TextUtils.isEmpty(categoryId)) {
-                    BookClassModel baseModel = (BookClassModel) mBookClassModelDao.queryModel(categoryId);
-                    bookModel.category = baseModel;
+//                    BookClassModel baseModel = (BookClassModel) mBookClassModelDao.queryModel(bookModel.uuid);
+//                    bookModel.category = baseModel;
                 }
 
             }
@@ -112,17 +111,17 @@ public class BookModelDaoImple implements BookModelDao {
             int count = cursor.getCount();
             while (cursor.moveToNext()) {
                 BookModel bookModel = new BookModel();
-                bookModel.id = cursor.getString(cursor.getColumnIndex("id"));
-                bookModel.name = cursor.getString(cursor.getColumnIndex("name"));
-                bookModel.author = cursor.getString(cursor.getColumnIndex("author"));
-                bookModel.description = cursor.getString(cursor.getColumnIndex("description"));
+                bookModel.uuid = cursor.getString(cursor.getColumnIndex("id"));
+                bookModel.bname = cursor.getString(cursor.getColumnIndex("name"));
+                bookModel.bauthor = cursor.getString(cursor.getColumnIndex("author"));
+                bookModel.bdesc= cursor.getString(cursor.getColumnIndex("description"));
                 bookModel.filename = cursor.getString(cursor.getColumnIndex("filename"));
-                bookModel.path = cursor.getString(cursor.getColumnIndex("path"));
+                bookModel.bpath = cursor.getString(cursor.getColumnIndex("path"));
                 String categoryId = cursor.getString(cursor.getColumnIndex("categoryId"));
-                if (!TextUtils.isEmpty(categoryId)) {
-                    BookClassModel baseModel = (BookClassModel) mBookClassModelDao.queryModel(categoryId);
-                    bookModel.category = baseModel;
-                }
+//                if (!TextUtils.isEmpty(categoryId)) {
+//                    BookClassModel baseModel = (BookClassModel) mBookClassModelDao.queryModel(categoryId);
+//                    bookModel.category = baseModel;
+//                }
 
                 list.add(bookModel);
 
@@ -144,23 +143,20 @@ public class BookModelDaoImple implements BookModelDao {
                 "update  books  set name = ?,author =?," +
                         "description = ?,path = ?,filename = ?," +
                         "categoryId = ?,addTime= ? where id = ?";
-        BookClassModel category = bookModel.category;
-        String categoryId = "";
-        if (category != null) {
-            categoryId = category.id;
 
-        }
+        String categoryId = "";
+
 
         String[] values =
                 {
-                        bookModel.name,
-                        bookModel.author,
-                        bookModel.description,
-                        bookModel.path,
+                        bookModel.bname,
+                        bookModel.bauthor,
+                        bookModel.bdesc,
+                        bookModel.bpath,
                         bookModel.filename,
                         categoryId,
                         new Date().getTime() + "",
-                        bookModel.id
+                        ""
 
                 };
 

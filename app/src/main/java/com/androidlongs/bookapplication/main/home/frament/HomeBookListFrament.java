@@ -70,7 +70,7 @@ public class HomeBookListFrament extends BaseFrament {
 
     private void getBookListFromNet() {
         LogUtils.d("加载网络数据");
-        String url = HttpHelper.sBaseUrl + "?tag=getBookList";
+        String url = HttpHelper.sHomeBookListUrl;
         OkhttpRequestUtils.getInstance().getRequest(url, mGetBookListCallback);
     }
 
@@ -90,9 +90,9 @@ public class HomeBookListFrament extends BaseFrament {
                 try {
                     mBookModelList = GsonUtil.parseJsonArrayWithGson(string, BookModel.class);
                     //保存到数据库
-                    for (BookModel bookModel : mBookModelList) {
-                        mCommonBaseServiceInterface.addBookModel(bookModel);
-                    }
+//                    for (BookModel bookModel : mBookModelList) {
+//                        mCommonBaseServiceInterface.addBookModel(bookModel);
+//                    }
                     App.mHandler.post(new Runnable() {
                         @Override
                         public void run() {

@@ -1,6 +1,5 @@
-package com.androidlongs.bookapplication.main.login.model;
+package com.androidlongs.bookapplication.main.forum.model;
 
-import com.androidlongs.bookapplication.base.BaseModel;
 import com.androidlongs.bookapplication.main.common.UserInfoModel;
 
 import java.io.Serializable;
@@ -12,12 +11,12 @@ import java.util.List;
  * 落在谷底，思人生
  */
 
-public class LoginResponseModel implements Serializable {
+public class FroumResponseModel implements Serializable {
 
     public String code;
     public String message;
     public UserInfoModel content;
-    public List<BaseModel> contentList;
+    public List<ForumModel> contentList;
 
     @Override
     public String toString() {

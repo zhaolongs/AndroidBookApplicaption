@@ -45,11 +45,10 @@ public class OkhttpRequestUtils {
 
     /**
      * Get请求数据
-     *
-     * @param url      链接
+     *  @param url      链接
      * @param callback 回调
      */
-    public void getRequest(String url, Callback callback) {
+    public Call getRequest(String url, Callback callback) {
         OkHttpClient httpClient = new OkHttpClient();
 
         Request.Builder builder = new Request.Builder();
@@ -59,6 +58,7 @@ public class OkhttpRequestUtils {
         Call call = httpClient.newCall(request);
 
         call.enqueue(callback);
+        return call;
     }
 
     /**

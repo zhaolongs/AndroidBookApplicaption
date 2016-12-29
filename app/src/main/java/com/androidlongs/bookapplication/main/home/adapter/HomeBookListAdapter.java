@@ -70,8 +70,8 @@ public class HomeBookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public void setData(BookModel bookModel, int position) {
 
-            String name = bookModel.name;
-            String description = bookModel.description;
+            String name = bookModel.bname;
+            String description = bookModel.bdesc;
 
             if (TextUtils.isEmpty(name)) {
                 name = "无";
