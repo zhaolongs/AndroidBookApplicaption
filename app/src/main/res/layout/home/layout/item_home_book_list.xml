@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+
               android:orientation="vertical">
 
     <LinearLayout
 
         android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/bg_home_book_list_item_select"
         android:gravity="center_vertical"
@@ -25,15 +26,18 @@
             android:orientation="vertical">
 
             <ImageView
+                android:padding="4dp"
+                android:background="@drawable/bg_image_title_shape"
                 android:id="@+id/id_iv_book_list_item_title"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:src="@mipmap/defaul_title"/>
+                android:src="@mipmap/book"/>
 
             <TextView
 
+                android:layout_marginBottom="4dp"
                 android:textSize="16sp"
                 android:textColor="#161616"
                 android:id="@+id/id_book_list_item_name"

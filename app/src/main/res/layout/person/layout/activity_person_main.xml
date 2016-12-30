@@ -1,209 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<com.androidlongs.bookapplication.main.view.PullToScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#efefef"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="160dp">
-
-                <ImageView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/per_header"/>
-
-                <ImageView
-                    android:id="@+id/id_iv_person_activity_back"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:padding="10dp"
-                    android:src="@mipmap/back"/>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="20dp"
-                    android:background="@null"
-                    android:text=""
-                    android:textColor="#fff"
-                    android:textSize="16sp"/>
-            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/bg_person_item_select_2"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:background="#efefef"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@color/person_tiem_title_background"
-                    android:padding="6dp"
-                    android:src="@mipmap/person_name_2"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp">
 
-                <TextView
-                    android:id="@+id/id_ll_activity_person_my_name"
+                    <ImageView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/per_header"/>
+
+                    <ImageView
+                        android:id="@+id/id_iv_person_activity_back"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
+                        android:src="@mipmap/back"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="20dp"
+                        android:background="@null"
+                        android:text=""
+                        android:textColor="#fff"
+                        android:textSize="16sp"/>
+                </RelativeLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/bg_person_item_select_2"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center_vertical"
-                    android:hint="请登录"
-                    android:paddingLeft="18dp"
-                    android:textColor="@color/person_item_text_color"
-                    android:textColorHint="@color/person_item_text_hint_color"/>
-            </LinearLayout>
+                    android:orientation="horizontal">
 
-            <View
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@color/person_tiem_title_background"
+                        android:padding="6dp"
+                        android:src="@mipmap/person_name_2"/>
 
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
-                android:background="#fff"/>
+                    <TextView
+                        android:id="@+id/id_ll_activity_person_my_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:hint="请登录"
+                        android:paddingLeft="18dp"
+                        android:textColor="@color/person_item_text_color"
+                        android:textColorHint="@color/person_item_text_hint_color"/>
+                </LinearLayout>
 
-            <LinearLayout
+                <View
 
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/bg_person_item_select_2"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:background="#fff"/>
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@color/person_tiem_title_background"
-                    android:padding="6dp"
-                    android:src="@mipmap/person_sign"/>
+                <LinearLayout
 
-                <TextView
-                    android:id="@+id/id_ll_activity_person_my_desc"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:layout_marginTop="0dp"
+                    android:background="@drawable/bg_person_item_select_2"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center_vertical"
-                    android:hint="个性签名"
-                    android:paddingLeft="18dp"
-                    android:textColor="@color/person_item_text_color"
-                    android:textColorHint="@color/person_item_text_hint_color"/>
-            </LinearLayout>
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/id_ll_activity_person_my_read_history"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_person_item_select_2"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@color/person_tiem_title_background"
+                        android:padding="6dp"
+                        android:src="@mipmap/person_sign"/>
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@color/person_tiem_title_background"
-                    android:padding="6dp"
-                    android:src="@mipmap/read_history"/>
+                    <TextView
+                        android:id="@+id/id_ll_activity_person_my_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:hint="个性签名"
+                        android:paddingLeft="18dp"
+                        android:textColor="@color/person_item_text_color"
+                        android:textColorHint="@color/person_item_text_hint_color"/>
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/id_tv_activity_person_my_read_history"
+                <LinearLayout
+                    android:id="@+id/id_ll_activity_person_my_read_history"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_person_item_select_2"
                     android:gravity="center_vertical"
-                    android:hint="我的阅读记录"
-                    android:paddingLeft="18dp"
-                    android:textColor="@color/person_item_text_color"
-                    android:textColorHint="@color/person_item_text_hint_color"/>
-            </LinearLayout>
+                    android:orientation="horizontal">
 
-            <View
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@color/person_tiem_title_background"
+                        android:padding="6dp"
+                        android:src="@mipmap/read_history"/>
 
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
-                android:background="#fff"/>
+                    <TextView
+                        android:id="@+id/id_tv_activity_person_my_read_history"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:hint="我的阅读记录"
+                        android:paddingLeft="18dp"
+                        android:textColor="@color/person_item_text_color"
+                        android:textColorHint="@color/person_item_text_hint_color"/>
+                </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/id_ll_activity_person_my_book_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
-                android:background="@drawable/bg_person_item_select_2"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                <View
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@color/person_tiem_title_background"
-                    android:padding="6dp"
-                    android:src="@mipmap/book"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:background="#fff"/>
 
-                <TextView
-                    android:id="@+id/id_tv_activity_person_my_book_list"
+                <LinearLayout
+                    android:id="@+id/id_ll_activity_person_my_book_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:background="@drawable/bg_person_item_select_2"
                     android:gravity="center_vertical"
-                    android:hint="我的书架"
-                    android:paddingLeft="18dp"
-                    android:textColor="@color/person_item_text_color"
-                    android:textColorHint="@color/person_item_text_hint_color"/>
-            </LinearLayout>
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/id_ll_activity_person_login"
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
-                android:layout_marginTop="36dp"
-                android:background="@drawable/bg_person_item_select_2"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@color/person_tiem_title_background"
+                        android:padding="6dp"
+                        android:src="@mipmap/book"/>
 
+                    <TextView
+                        android:id="@+id/id_tv_activity_person_my_book_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:hint="我的书架"
+                        android:paddingLeft="18dp"
+                        android:textColor="@color/person_item_text_color"
+                        android:textColorHint="@color/person_item_text_hint_color"/>
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/id_tv_activity_person_login"
+                <LinearLayout
+                    android:id="@+id/id_ll_activity_person_login"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_person_button_login_select"
-                    android:gravity="center"
-                    android:paddingLeft="18dp"
-                    android:text="登录"
-                    android:textColor="#fff"
-                    android:textSize="15sp"/>
+                    android:layout_height="42dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:layout_marginTop="36dp"
+                    android:background="@drawable/bg_person_item_select_2"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/id_tv_activity_person_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_person_button_login_select"
+                        android:gravity="center"
+                        android:paddingLeft="18dp"
+                        android:text="登录"
+                        android:textColor="#fff"
+                        android:textSize="15sp"/>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-
-    </ScrollView>
-</LinearLayout>
+    </LinearLayout>
+</com.androidlongs.bookapplication.main.view.PullToScrollView>

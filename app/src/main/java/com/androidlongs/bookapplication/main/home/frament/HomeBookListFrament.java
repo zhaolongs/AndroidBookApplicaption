@@ -7,9 +7,11 @@ import android.view.View;
 
 import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
+import com.androidlongs.bookapplication.base.AppConfigFile;
 import com.androidlongs.bookapplication.base.BaseFrament;
 import com.androidlongs.bookapplication.base.BaseModel;
 import com.androidlongs.bookapplication.main.home.adapter.HomeBookListAdapter;
+import com.androidlongs.bookapplication.main.home.inter.OnBookListItemClickLiserner;
 import com.androidlongs.bookapplication.main.home.model.BookModel;
 import com.androidlongs.bookapplication.main.net.HttpHelper;
 import com.androidlongs.bookapplication.main.net.OkhttpRequestUtils;
@@ -49,8 +51,41 @@ public class HomeBookListFrament extends BaseFrament {
     public void commonFunction() {
 
         setRecyclerListData();
-        //加载本地数据
-        loadDbCacheDatas();
+
+        if (AppConfigFile.sIsTest) {
+            testDataLoadFuncation();
+        }else {
+            //加载本地数据
+            loadDbCacheDatas();
+        }
+
+
+        mHomeBookListAdapter.setOnBookListItemClickLiserner(mItemClickLiserner);
+
+    }
+
+    private OnBookListItemClickLiserner mItemClickLiserner = new OnBookListItemClickLiserner() {
+        @Override
+        public void onNormalClick(View view, int postion) {
+            LogUtils.d("item click  "+postion);
+        }
+
+        @Override
+        public void onLongClick(View view, int postion) {
+
+        }
+    };
+
+    private void testDataLoadFuncation() {
+        for (int i = 0; i <30 ; i++) {
+            BookModel bookModel = new BookModel();
+            bookModel.bname = "人性的孤独";
+            bookModel.bauthor="赵子龙";
+            bookModel.bdesc = "孤独是一种唯美的体验和感觉，也是一种人性的高度，在茫茫人海里，我们时常找不到自我的位置，迷失着自我的方向，从寂寞的夜色中，从孤冷的翡翠的宫殿中，徘徊着来来去去的人生曲线，升华或沉淀，都在孤独的灵魂深处提升着自我的清纯";
+            mBookModelList.add(bookModel);
+        }
+        setRecyclerListData();
+
 
     }
 

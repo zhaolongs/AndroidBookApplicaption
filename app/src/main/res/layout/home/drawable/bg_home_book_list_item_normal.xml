@@ -3,6 +3,6 @@
 
     <solid android:color="@color/home_book_list_item_background_normal"/>
     <size android:width="20dp" android:height="10dp"/>
-    <corners android:radius="8dp"/>
+    <corners android:radius="0dp"/>
     <stroke android:width="0.5dp" android:color="@color/home_book_list_item_background_normal"/>
 </shape>

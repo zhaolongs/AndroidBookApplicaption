@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
+import com.androidlongs.bookapplication.main.home.inter.OnBookListItemClickLiserner;
 import com.androidlongs.bookapplication.main.home.model.BookModel;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class HomeBookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-    private class BookListViewHoler extends RecyclerView.ViewHolder {
+    private class BookListViewHoler extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView mTitleImageView;
         private final TextView mTitleTextView;
@@ -63,10 +64,13 @@ public class HomeBookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public BookListViewHoler(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             mTitleImageView = (ImageView) itemView.findViewById(R.id.id_iv_book_list_item_title);
             mTitleTextView = (TextView) itemView.findViewById(R.id.id_book_list_item_name);
             mDesTextView = (TextView) itemView.findViewById(R.id.id_book_list_item_des);
         }
+
+        private int mPosition = 0;
 
         public void setData(BookModel bookModel, int position) {
 
@@ -83,6 +87,22 @@ public class HomeBookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             mTitleTextView.setText(name);
             mDesTextView.setText(description);
+
+
+            mPosition = position;
         }
+
+        @Override
+        public void onClick(View v) {
+            if (mOnBookListItemClickLiserner != null) {
+                mOnBookListItemClickLiserner.onNormalClick(v,mPosition);
+            }
+        }
+    }
+
+    public OnBookListItemClickLiserner mOnBookListItemClickLiserner;
+
+    public void setOnBookListItemClickLiserner(OnBookListItemClickLiserner onBookListItemClickLiserner) {
+        mOnBookListItemClickLiserner = onBookListItemClickLiserner;
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
+import com.androidlongs.bookapplication.main.home.inter.OnBookListItemClickLiserner;
 import com.androidlongs.bookapplication.main.home.model.BookClassModel;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class HomeBookClassAdapter extends RecyclerView.Adapter<RecyclerView.View
         this.mBookClassList = bookClassModels;
     }
 
-    private class BookClassViewHolder extends RecyclerView.ViewHolder {
+    private class BookClassViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private final ImageView mTitleImageView;
         private final TextView mNameTextView;
@@ -64,8 +65,12 @@ public class HomeBookClassAdapter extends RecyclerView.Adapter<RecyclerView.View
             mTitleImageView = (ImageView) itemView.findViewById(R.id.id_iv_book_class_item_title);
             mNameTextView = (TextView) itemView.findViewById(R.id.id_book_class_item_name);
             mDesTextView = (TextView) itemView.findViewById(R.id.id_book_class_item_des);
+
+            itemView.setOnClickListener(this);
         }
 
+        //当前点击的位置
+        private int mPosition =0;
         public void setDatas(BookClassModel bookClassModel, int position) {
             String description = bookClassModel.description;
             String name = bookClassModel.name;
@@ -77,6 +82,21 @@ public class HomeBookClassAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
             mNameTextView.setText(name);
             mDesTextView.setText(description);
+
+            mPosition = position;
         }
+
+        @Override
+        public void onClick(View v) {
+            if (mOnBookListItemClickLiserner != null) {
+                mOnBookListItemClickLiserner.onNormalClick(v,mPosition);
+            }
+        }
+    }
+
+    public OnBookListItemClickLiserner mOnBookListItemClickLiserner;
+
+    public void setOnBookListItemClickLiserner(OnBookListItemClickLiserner onBookListItemClickLiserner) {
+        mOnBookListItemClickLiserner = onBookListItemClickLiserner;
     }
 }
