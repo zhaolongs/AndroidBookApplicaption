@@ -1,5 +1,6 @@
 package com.androidlongs.bookapplication.main.login.activity;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -28,12 +29,16 @@ import cn.smssdk.SMSSDK;
 
 public class SmssLoginActivity extends BaseActivity {
 
-
+    private SmssLoginActivity.LoginType mcurrentLoginType = SmssLoginActivity.LoginType.WELCOME;
+    private enum LoginType{
+        WELCOME,HOME,
+    }
     private ImageView mBackImageView;
     private EditText mPhoneEditText;
     private TextView mGetVerTextView;
     private EditText mInputEditText;
     private LinearLayout mNextLinearLayout;
+    private TextView mSmssRegistTextView;
 
     @Override
     public int getContentView() {
@@ -48,10 +53,22 @@ public class SmssLoginActivity extends BaseActivity {
         mGetVerTextView = (TextView) findViewById(R.id.id_et_smss_get_login_password);
         mInputEditText = (EditText) findViewById(R.id.id_et_smss_login_password);
         mNextLinearLayout = (LinearLayout) findViewById(R.id.id_ll_next);
+
+        mSmssRegistTextView = (TextView) findViewById(R.id.id_tv_smss_login_register);
     }
 
     @Override
     public void commonFunction() {
+
+        Intent intent = getIntent();
+        String tag = intent.getStringExtra("tag");
+        if (TextUtils.isEmpty(tag)) {
+            mcurrentLoginType = LoginType.WELCOME;
+        }else if (TextUtils.equals(tag,"home")){
+            mcurrentLoginType  = LoginType.HOME;
+        }else  if(TextUtils.equals("welcome",tag)){
+            mcurrentLoginType = LoginType.WELCOME;
+        }
         //注册短信回调
         SMSSDK.registerEventHandler(mEventHandler);
 
@@ -67,6 +84,31 @@ public class SmssLoginActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             SmssLoginActivity.this.finish();
+        }
+    };
+
+    //注册
+    //注册页面进入
+    private View.OnClickListener mRegistOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(SmssLoginActivity.this, RegisetrActivity.class);
+
+
+            switch (mcurrentLoginType){
+                case WELCOME:
+                    intent.putExtra("tag", "welcome");
+                    SmssLoginActivity.this.startActivity(intent);
+                    break;
+                case HOME:
+                    intent.putExtra("tag", "home");
+                    SmssLoginActivity.this.startActivity(intent);
+                    SmssLoginActivity.this.finish();
+                    break;
+                default:
+                    break;
+            }
+
         }
     };
     //获取验证码

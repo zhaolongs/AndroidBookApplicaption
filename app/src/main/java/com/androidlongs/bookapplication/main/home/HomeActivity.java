@@ -277,6 +277,7 @@ public class HomeActivity extends BaseActivity {
     private String mCurrentTagFrament = "";
 
     public void onCheckedChanged(String tag, boolean flag) {
+
         //重复点击 加载页面
         if (TextUtils.equals(tag, mCurrentTagFrament)) {
             ToastUtils.show("已是当前页面");
@@ -284,7 +285,9 @@ public class HomeActivity extends BaseActivity {
         }
 
 
+        //获取 fragmentManager
         FragmentManager fm = getFragmentManager();
+        //开启 transcaton
         FragmentTransaction ft = fm.beginTransaction();
         //设置切换动画
         if (TextUtils.equals(tag, mHeaderTagHomeBookList)) {
@@ -305,6 +308,7 @@ public class HomeActivity extends BaseActivity {
 
         //当前页面
         mCurrentTagFrament = tag;
+
         Fragment mHomeBookListFrament = fm.findFragmentByTag(mHeaderTagHomeBookList);
         Fragment mHomeBookClassFrament = fm.findFragmentByTag(mTagHomeBookClass);
         Fragment mFindMainFrament = fm.findFragmentByTag(mTagFindFrament);

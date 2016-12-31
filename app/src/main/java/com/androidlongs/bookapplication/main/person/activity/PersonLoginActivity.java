@@ -119,7 +119,21 @@ public class PersonLoginActivity extends BaseActivity {
     //短信登录
     private void SSMSLoginFunction() {
         Intent intent = new Intent(PersonLoginActivity.this, SmssLoginActivity.class);
-        PersonLoginActivity.this.startActivity(intent);
+
+        switch (mcurrentLoginType){
+            case WELCOME:
+                intent.putExtra("tag", "welcome");
+                PersonLoginActivity.this.startActivity(intent);
+                break;
+            case HOME:
+                intent.putExtra("tag", "home");
+                PersonLoginActivity.this.startActivity(intent);
+                PersonLoginActivity.this.finish();
+                break;
+            default:
+                break;
+        }
+
 
     }
 

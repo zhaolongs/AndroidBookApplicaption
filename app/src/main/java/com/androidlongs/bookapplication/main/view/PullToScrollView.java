@@ -1,6 +1,7 @@
 package com.androidlongs.bookapplication.main.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -37,6 +38,7 @@ public class PullToScrollView extends ScrollView {
     protected void onFinishInflate() {
         if (getChildCount() > 0) {
             childView = getChildAt(0);
+            this.setBackgroundColor(Color.WHITE);
         }
     }
 

@@ -10,14 +10,19 @@
 
     <style name="FeelyouWindowAnimTheme" parent="@android:style/Animation.Activity">
         <!-- 当我们从 A1 启动 A2 时，A2 出现在屏幕上 -->
-        <item name="android:activityOpenEnterAnimation">@anim/in_open</item>
+        <item name="android:activityOpenEnterAnimation">@anim/a1_a2_a2_in_open</item>
         <!-- 当我们从 A1 启动 A2 时，A1 从屏幕上消失-->
-        <item name="android:activityOpenExitAnimation">@anim/out_open</item>
+        <item name="android:activityOpenExitAnimation">@anim/al_a2_a1_out</item>
         <!--当我们从 A2 退出回到 A1 时，A2 从屏幕上消失-->
-        <item name="android:activityCloseEnterAnimation">@anim/in_open</item>
+        <item name="android:activityCloseEnterAnimation">@anim/al_a2_a2_out</item>
         <!--当我们从 A2 退出回到 A1 时，A1 出现在屏幕上-->
-        <item name="android:activityCloseExitAnimation">@anim/out_open</item>
+        <item name="android:activityCloseExitAnimation">@anim/al_a2_a1_in</item>
     </style>
+
+    <style name="AnimActivityTheme">
+        <item name="android:windowAnimationStyle">@style/FeelyouWindowAnimTheme</item>
+    </style>
+
 
 
     <style name="PopToast">
