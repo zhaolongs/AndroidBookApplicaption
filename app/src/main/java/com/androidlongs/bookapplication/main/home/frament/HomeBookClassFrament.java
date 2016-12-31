@@ -7,9 +7,11 @@ import android.view.View;
 
 import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
+import com.androidlongs.bookapplication.base.AppConfigFile;
 import com.androidlongs.bookapplication.base.BaseFrament;
 import com.androidlongs.bookapplication.base.BaseModel;
 import com.androidlongs.bookapplication.main.home.adapter.HomeBookClassAdapter;
+import com.androidlongs.bookapplication.main.home.inter.OnBookListItemClickLiserner;
 import com.androidlongs.bookapplication.main.home.model.BookClassModel;
 import com.androidlongs.bookapplication.main.net.HttpHelper;
 import com.androidlongs.bookapplication.main.net.OkhttpRequestUtils;
@@ -49,8 +51,38 @@ public class HomeBookClassFrament extends BaseFrament {
     public void commonFunction() {
 
         setRecyListData();
-        //加载本地数据
-        loadLocationData();
+        if (AppConfigFile.sIsTest) {
+            loadTestDataFunction();
+
+        }else {
+            //加载本地数据
+            loadLocationData();
+        }
+
+        mBookClassAdapter.setOnBookListItemClickLiserner(mBookClassClickLiserner);
+    }
+
+    private OnBookListItemClickLiserner mBookClassClickLiserner = new OnBookListItemClickLiserner() {
+        @Override
+        public void onNormalClick(View view, int postion) {
+            LogUtils.d("class item click "+postion);
+        }
+
+        @Override
+        public void onLongClick(View view, int postion) {
+
+        }
+    };
+
+    private void loadTestDataFunction() {
+        for (int i = 0; i < 10; i++) {
+            BookClassModel model = new BookClassModel();
+            model.name = "小说";
+            model.description="\t走进纷扰的红尘，我们一不留神就走进苍茫的大地里，那里有黄昏的寂寞，也有日暮苍山远的清凉，在冷落的空气中，更多的时候是与自然相伴，与天地相互融合，走是一种心灵的追求，不管是遭遇生离死别，还是人生的阴晴圆缺，我们都不得停留，在行走在人性的高度，孤独掩饰的是一种大爱无痕，是一种真情的留恋，也是一种天涯咫尺的思念";
+
+            mBookClassModels.add(model);
+        }
+        setRecyListData();
     }
 
     private void loadLocationData() {

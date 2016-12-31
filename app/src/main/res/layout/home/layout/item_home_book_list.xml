@@ -45,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/id_iv_book_list_item_title"
                 android:text="大秦帝国"/>
-
             <TextView
                 android:textSize="14sp"
                 android:textColor="#818080"
@@ -55,6 +54,7 @@
                 android:layout_alignBottom="@id/id_iv_book_list_item_title"
                 android:layout_toRightOf="@id/id_iv_book_list_item_title"
                 android:maxLines="1"
+                android:ellipsize="end"
                 android:text="这是一本很神厅的长篇历史小说"/>
         </RelativeLayout>
 

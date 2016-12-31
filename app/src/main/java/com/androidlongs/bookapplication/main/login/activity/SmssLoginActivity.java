@@ -11,6 +11,7 @@ import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
 import com.androidlongs.bookapplication.base.BaseActivity;
 import com.androidlongs.bookapplication.main.util.LogUtils;
+import com.androidlongs.bookapplication.main.util.SharedPreferencesUtil;
 import com.androidlongs.bookapplication.main.util.ToastUtils;
 
 import java.util.ArrayList;
@@ -170,6 +171,53 @@ public class SmssLoginActivity extends BaseActivity {
 
     }
 
+    private String mMSMMSendFinishTag = "send-smss-finish";
+    private String mMSMMNoSendFinishTag = "no-send-smss-finish";
+    private long mMsmmSendTime = 0;
+    private String mMsmmSendTimeTag = "smss-time-tag";
+    private String mMsmmStatueTag = "smss-tag";
+    private String mCurrentMsmmSendStatue = mMSMMNoSendFinishTag;
+
+
+    private long mFlagTime = 0;
+
+    private void setSmssFunction(){
+        mCurrentMsmmSendStatue = SharedPreferencesUtil.getInstance().getData(mMsmmStatueTag);
+        if (TextUtils.isEmpty(mCurrentMsmmSendStatue)) {
+            mCurrentMsmmSendStatue = mMSMMNoSendFinishTag;
+        }else {
+            String sendTime = SharedPreferencesUtil.getInstance().getData(mMsmmSendTimeTag);
+            if (TextUtils.isEmpty(sendTime)) {
+                mMsmmSendTime =0;
+            }else {
+                mMsmmSendTime = Long.valueOf(sendTime);
+            }
+
+            Long currentTime = System.currentTimeMillis();
+            mFlagTime = (5*60*1000) -(currentTime - mMsmmSendTime );
+            if (mFlagTime>=0){
+                mCurrentMsmmSendStatue =mMSMMNoSendFinishTag;
+            }else {
+                mCurrentMsmmSendStatue = mMSMMSendFinishTag;
+                App.mHandler.post(mRunnable);
+            }
+        }
+    }
+    private Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (mFlagTime>0){
+                mFlagTime -=1000;
+                App.mHandler.postDelayed(mRunnable,1000);
+                App.mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mGetVerTextView.setText((mFlagTime/1000)+"秒后发送");
+                    }
+                });
+            }
+        }
+    };
     @Override
     protected void onDestroy() {
         super.onDestroy();

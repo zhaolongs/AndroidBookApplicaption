@@ -43,8 +43,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:maxLines="2"
+            android:ellipsize="end"
             android:text="这是一本很神厅的长篇历史小说"
-
             android:textColor="#818080"
             android:textSize="10sp"/>
 
