@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
+import com.androidlongs.bookapplication.base.AppConfigFile;
 import com.androidlongs.bookapplication.base.BaseFrament;
 import com.androidlongs.bookapplication.main.forum.adapter.ForumMainAdapter;
 import com.androidlongs.bookapplication.main.forum.model.ForumModel;
@@ -24,6 +25,7 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by androidlongs on 16/12/18.
@@ -50,8 +52,22 @@ public class ForumMainFrament extends BaseFrament {
     @Override
     public void commonFunction() {
 
-        requestDataFroumNet();
+        if (AppConfigFile.sIsTest) {
+            testFunction();
+        }else {
+            requestDataFroumNet();
+        }
 
+    }
+
+    private void testFunction() {
+        for (int i = 0; i < 20; i++) {
+            ForumModel model = new ForumModel();
+            model.fuuid = UUID.randomUUID().toString();
+            model.fDesc = "this is a test ";
+            mForumModelList.add(model);
+        }
+        setRecyclerListData();
     }
 
     private void requestDataFroumNet() {
