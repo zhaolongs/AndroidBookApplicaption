@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.home.HomeActivity"
+            android:name=".main.home.activity.HomeActivity"
             android:theme="@style/AnimActivityTheme"/>
         <activity
             android:name=".main.person.activity.MyBookSelfsActivity"
@@ -60,5 +60,12 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".main.login.activity.SmssLoginActivity"/>
+        <activity
+            android:name=".main.home.activity.BookDetaleActivity"
+            android:theme="@style/AnimActivityTheme"
+            />
+        <activity
+            android:name=".main.home.activity.StartReadingActivity"
+            android:theme="@style/AnimActivityTheme"/>
     </application>
 </manifest>

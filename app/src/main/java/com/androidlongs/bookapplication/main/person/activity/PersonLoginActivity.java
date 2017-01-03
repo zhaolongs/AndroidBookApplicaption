@@ -11,7 +11,7 @@ import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
 import com.androidlongs.bookapplication.base.BaseActivity;
 import com.androidlongs.bookapplication.main.common.UserInfoInformationFunction;
-import com.androidlongs.bookapplication.main.home.HomeActivity;
+import com.androidlongs.bookapplication.main.home.activity.HomeActivity;
 import com.androidlongs.bookapplication.main.login.activity.RegisetrActivity;
 import com.androidlongs.bookapplication.main.login.activity.SmssLoginActivity;
 import com.androidlongs.bookapplication.main.login.model.LoginResponseModel;

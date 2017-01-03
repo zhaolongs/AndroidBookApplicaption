@@ -13,7 +13,7 @@ import com.androidlongs.bookapplication.base.App;
 import com.androidlongs.bookapplication.base.BaseActivity;
 import com.androidlongs.bookapplication.main.common.UserInfoInformationFunction;
 import com.androidlongs.bookapplication.main.common.UserInfoModel;
-import com.androidlongs.bookapplication.main.home.HomeActivity;
+import com.androidlongs.bookapplication.main.home.activity.HomeActivity;
 import com.androidlongs.bookapplication.main.login.model.LoginResponseModel;
 import com.androidlongs.bookapplication.main.net.HttpHelper;
 import com.androidlongs.bookapplication.main.net.OkhttpRequestUtils;

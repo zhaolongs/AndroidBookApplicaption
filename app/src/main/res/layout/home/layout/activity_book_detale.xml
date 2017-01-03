@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/common_base_color"
+              android:elevation="11dp"
+              android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/header_background_color"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/id_ll_book_back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:paddingLeft="8dp"
+                android:src="@mipmap/back"
+                android:visibility="visible"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/id_tv_book_detal_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="详情"
+                android:textColor="#fff"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></LinearLayout>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/id_read_book_image"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/id_read_book_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:text="大秦帝国"
+        android:textColor="#383737"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/id_read_book_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:text="作者：赵子龙"
+        android:textColor="#383737"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/id_read_book_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="18dp"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:lineSpacingExtra="8dp"
+        android:maxLines="8"
+        android:text="\t\t大秦帝国》讲述了战国时代的秦国经变法而由弱转强，东出与六国争霸进而一统天下，以及最后走向灭亡的过程。是一部以秦国为主要视点来展现战国时代波澜壮阔的史诗。"
+        android:textColor="#383737"
+        android:textSize="14sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:background="@color/color4"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/id_read_add_book_selfs"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="加入书架"
+                android:background="@drawable/bg_person_button_login_select"
+                android:textColor="#fff"
+                android:textSize="16sp"/>
+            <View
+                android:layout_width="0.5dp"
+                android:background="#fff"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/id_read_start_reading"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_person_button_login_select"
+                android:gravity="center"
+                android:text="开始阅读"
+                android:textColor="#fff"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

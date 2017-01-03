@@ -1,4 +1,4 @@
-package com.androidlongs.bookapplication.main.home;
+package com.androidlongs.bookapplication.main.home.activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;

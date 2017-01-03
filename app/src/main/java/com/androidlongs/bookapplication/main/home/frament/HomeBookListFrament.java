@@ -1,5 +1,6 @@
 package com.androidlongs.bookapplication.main.home.frament;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import com.androidlongs.bookapplication.base.App;
 import com.androidlongs.bookapplication.base.AppConfigFile;
 import com.androidlongs.bookapplication.base.BaseFrament;
 import com.androidlongs.bookapplication.base.BaseModel;
+import com.androidlongs.bookapplication.main.home.activity.BookDetaleActivity;
 import com.androidlongs.bookapplication.main.home.adapter.HomeBookListAdapter;
 import com.androidlongs.bookapplication.main.home.inter.OnBookListItemClickLiserner;
 import com.androidlongs.bookapplication.main.home.model.BookModel;
@@ -68,6 +70,8 @@ public class HomeBookListFrament extends BaseFrament {
         @Override
         public void onNormalClick(View view, int postion) {
             LogUtils.d("item click  "+postion);
+            Intent intent = new Intent(HomeBookListFrament.this.getActivity(), BookDetaleActivity.class);
+            HomeBookListFrament.this.getActivity().startActivity(intent);
         }
 
         @Override

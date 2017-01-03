@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_home_background_bitmap"
     android:orientation="vertical"
-    tools:context="com.androidlongs.bookapplication.main.home.HomeActivity">
+    tools:context="com.androidlongs.bookapplication.main.home.activity.HomeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
