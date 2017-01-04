@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#14000000"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:id="@+id/ll_pop_progress_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/progress_loading_bg"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <ProgressBar
+            android:indeterminateDuration="1200"
+            style="@style/mProgress_circle"
+            android:id="@+id/progressBar3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_pop_text_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:text="正在加载中"
+            android:textColor="#fff" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/ll_pop_progress_close"
+        android:padding="14dp"
+        android:textColor="@color/color4"
+        android:textSize="14sp"
+        android:text="取消"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="87dp"
+        android:layout_above="@+id/ll_pop_progress_content"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>

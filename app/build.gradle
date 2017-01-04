@@ -33,7 +33,8 @@ android {
                     'src/main/res/layout/forum',
                     'src/main/res/layout/home',
                     'src/main/res/layout/login',
-                    'src/main/res/layout/person'
+                    'src/main/res/layout/person',
+                    'src/main/res/layout/pop1'
             ]
         }
     }

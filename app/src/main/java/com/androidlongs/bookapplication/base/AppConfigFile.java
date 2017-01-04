@@ -9,7 +9,7 @@ package com.androidlongs.bookapplication.base;
 public class AppConfigFile {
 
 
-    public static  boolean sIsTest = true;
+    public static  boolean sIsTest = false;
     public static boolean isDubug = true;
 
 

@@ -16,6 +16,7 @@ import com.androidlongs.bookapplication.main.net.HttpHelper;
 import com.androidlongs.bookapplication.main.net.OkhttpRequestUtils;
 import com.androidlongs.bookapplication.main.util.GsonUtil;
 import com.androidlongs.bookapplication.main.util.LogUtils;
+import com.androidlongs.bookapplication.main.util.PopFunction;
 import com.androidlongs.bookapplication.main.util.ToastUtils;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -54,11 +55,17 @@ public class ForumMainFrament extends BaseFrament {
 
         if (AppConfigFile.sIsTest) {
             testFunction();
-        }else {
+        } else {
+            //加载网络数据
+            PopFunction.getInstance().fromBottomShow(App.mContext, mRecyclerView);
+            PopFunction.getInstance().setCloseLiserner(mOnProgressCloseLiserner);
+            mPreLoadTime = System.currentTimeMillis();
             requestDataFroumNet();
         }
 
     }
+
+    private long mPreLoadTime = 0;
 
     private void testFunction() {
         for (int i = 0; i < 20; i++) {
@@ -67,6 +74,11 @@ public class ForumMainFrament extends BaseFrament {
             model.fDesc = "this is a test ";
             mForumModelList.add(model);
         }
+
+        //加载网络数据
+        PopFunction.getInstance().fromBottomShow(App.mContext, mRecyclerView);
+        PopFunction.getInstance().setCloseLiserner(mOnProgressCloseLiserner);
+        mPreLoadTime = System.currentTimeMillis();
         setRecyclerListData();
     }
 
@@ -111,6 +123,25 @@ public class ForumMainFrament extends BaseFrament {
             } catch (Exception e) {
                 //异常
                 loadFaile(e);
+            } finally {
+                long currentTime = System.currentTimeMillis();
+                long flagTime = currentTime - mPreLoadTime;
+                if (flagTime > 2000) {
+                    App.mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            PopFunction.getInstance().close(false);
+                        }
+                    });
+                } else {
+                    long delyTime = 2000 - flagTime;
+                    App.mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            PopFunction.getInstance().close(false);
+                        }
+                    }, delyTime);
+                }
             }
         }
     };
@@ -128,6 +159,24 @@ public class ForumMainFrament extends BaseFrament {
                 ToastUtils.show("加载论坛数据异常");
             }
         });
+        long currentTime = System.currentTimeMillis();
+        long flagTime = currentTime - mPreLoadTime;
+        if (flagTime > 2000) {
+            App.mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    PopFunction.getInstance().close(false);
+                }
+            });
+        } else {
+            long delyTime = 2000 - flagTime;
+            App.mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    PopFunction.getInstance().close(false);
+                }
+            }, delyTime);
+        }
     }
 
     private List<ForumModel> mForumModelList = new ArrayList<>();
@@ -146,7 +195,7 @@ public class ForumMainFrament extends BaseFrament {
                 } else {
                     //加载成功
                     mForumModelList.clear();
-                    mForumModelList= loginResponseModel.contentList;
+                    mForumModelList = loginResponseModel.contentList;
 
                     //刷新列表
                     setRecyclerListData();
@@ -168,6 +217,27 @@ public class ForumMainFrament extends BaseFrament {
         }
     }
 
+    private PopFunction.OnProgressCloseLiserner mOnProgressCloseLiserner = new PopFunction.OnProgressCloseLiserner() {
+        @Override
+        public void onClose(boolean flag) {
+            if (flag) {
+                LogUtils.d("加载完成");
+                ToastUtils.show("加载完成");
+            } else {
+                LogUtils.d("取消加载");
+                ToastUtils.show("取消加载");
+            }
+
+            App.mHandler.removeCallbacksAndMessages(0);
+
+            if (mCall != null) {
+                if (!mCall.isCanceled()) {
+                    mCall.cancel();
+                }
+            }
+
+        }
+    };
 
     @Override
     public void onDestroy() {
@@ -178,5 +248,7 @@ public class ForumMainFrament extends BaseFrament {
                 mCall = null;
             }
         }
+        App.mHandler.removeCallbacksAndMessages(0);
+
     }
 }

@@ -17,7 +17,9 @@ import com.androidlongs.bookapplication.main.net.HttpHelper;
 import com.androidlongs.bookapplication.main.net.OkhttpRequestUtils;
 import com.androidlongs.bookapplication.main.util.GsonUtil;
 import com.androidlongs.bookapplication.main.util.LogUtils;
+import com.androidlongs.bookapplication.main.util.PopFunction;
 import com.androidlongs.bookapplication.main.util.ToastUtils;
+import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -36,6 +38,7 @@ public class HomeBookClassFrament extends BaseFrament {
 
     private RecyclerView mRecyclerView;
     private HomeBookClassAdapter mBookClassAdapter;
+    private Call mGetBookListCall;
 
     @Override
     public int getContentView() {
@@ -51,13 +54,19 @@ public class HomeBookClassFrament extends BaseFrament {
     public void commonFunction() {
 
         setRecyListData();
-        if (AppConfigFile.sIsTest) {
-            loadTestDataFunction();
+        App.mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (AppConfigFile.sIsTest) {
+                    loadTestDataFunction();
 
-        }else {
-            //加载本地数据
-            loadLocationData();
-        }
+                } else {
+                    //加载本地数据
+                    loadLocationData();
+                }
+            }
+        }, 500);
+
 
         mBookClassAdapter.setOnBookListItemClickLiserner(mBookClassClickLiserner);
     }
@@ -65,7 +74,7 @@ public class HomeBookClassFrament extends BaseFrament {
     private OnBookListItemClickLiserner mBookClassClickLiserner = new OnBookListItemClickLiserner() {
         @Override
         public void onNormalClick(View view, int postion) {
-            LogUtils.d("class item click "+postion);
+            LogUtils.d("class item click " + postion);
         }
 
         @Override
@@ -78,12 +87,14 @@ public class HomeBookClassFrament extends BaseFrament {
         for (int i = 0; i < 10; i++) {
             BookClassModel model = new BookClassModel();
             model.name = "小说";
-            model.description="\t走进纷扰的红尘，我们一不留神就走进苍茫的大地里，那里有黄昏的寂寞，也有日暮苍山远的清凉，在冷落的空气中，更多的时候是与自然相伴，与天地相互融合，走是一种心灵的追求，不管是遭遇生离死别，还是人生的阴晴圆缺，我们都不得停留，在行走在人性的高度，孤独掩饰的是一种大爱无痕，是一种真情的留恋，也是一种天涯咫尺的思念";
+            model.description = "\t走进纷扰的红尘，我们一不留神就走进苍茫的大地里，那里有黄昏的寂寞，也有日暮苍山远的清凉，在冷落的空气中，更多的时候是与自然相伴，与天地相互融合，走是一种心灵的追求，不管是遭遇生离死别，还是人生的阴晴圆缺，我们都不得停留，在行走在人性的高度，孤独掩饰的是一种大爱无痕，是一种真情的留恋，也是一种天涯咫尺的思念";
 
             mBookClassModels.add(model);
         }
         setRecyListData();
     }
+
+    private long mPreLoadTime = 0;
 
     private void loadLocationData() {
         List<BaseModel> baseModelList = mCommonBaseServiceInterface.queryAllBookClassModel();
@@ -93,23 +104,48 @@ public class HomeBookClassFrament extends BaseFrament {
             for (BaseModel baseModel : baseModelList) {
                 mBookClassModels.add((BookClassModel) baseModel);
             }
+            //加载网络数据
+            PopFunction.getInstance().fromBottomShow(App.mContext, mRecyclerView);
+            PopFunction.getInstance().setCloseLiserner(mOnProgressCloseLiserner);
+            mPreLoadTime = System.currentTimeMillis();
             setRecyListData();
         }
 
-
+//加载网络数据
+        PopFunction.getInstance().fromRightShow(App.mContext, mRecyclerView);
+        PopFunction.getInstance().setCloseLiserner(mOnProgressCloseLiserner);
+        mPreLoadTime = System.currentTimeMillis();
         //加载 网络数据
         loadNetDatas();
     }
 
     private void loadNetDatas() {
         String url = HttpHelper.sBaseUrl + "?tag=getBookClassList";
-        OkhttpRequestUtils.getInstance().getRequest(url, mBookClassCallback);
+        mGetBookListCall = OkhttpRequestUtils.getInstance().getRequest(url, mBookClassCallback);
     }
 
     private Callback mBookClassCallback = new Callback() {
         @Override
         public void onFailure(Request request, IOException e) {
             LogUtils.e("加载异常  " + e.getMessage());
+            long currentTime = System.currentTimeMillis();
+            long flagTime = currentTime - mPreLoadTime;
+            if (flagTime > 2000) {
+                App.mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        PopFunction.getInstance().close(false);
+                    }
+                });
+            } else {
+                long delyTime = 2000 - flagTime;
+                App.mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        PopFunction.getInstance().close(false);
+                    }
+                }, delyTime);
+            }
         }
 
         @Override
@@ -142,6 +178,25 @@ public class HomeBookClassFrament extends BaseFrament {
                         ToastUtils.show("解析 异常 home book class ");
                     }
                 });
+            } finally {
+                long currentTime = System.currentTimeMillis();
+                long flagTime = currentTime - mPreLoadTime;
+                if (flagTime > 2000) {
+                    App.mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            PopFunction.getInstance().close(false);
+                        }
+                    });
+                } else {
+                    long delyTime = 2000 - flagTime;
+                    App.mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            PopFunction.getInstance().close(false);
+                        }
+                    }, delyTime);
+                }
             }
         }
     };
@@ -162,5 +217,40 @@ public class HomeBookClassFrament extends BaseFrament {
             mBookClassAdapter.notifyDataSetChanged();
         }
 
+    }
+
+    private PopFunction.OnProgressCloseLiserner mOnProgressCloseLiserner = new PopFunction.OnProgressCloseLiserner() {
+        @Override
+        public void onClose(boolean flag) {
+            if (flag) {
+                LogUtils.d("加载完成");
+                ToastUtils.show("加载完成");
+            } else {
+                LogUtils.d("取消加载");
+                ToastUtils.show("取消加载");
+            }
+
+            App.mHandler.removeCallbacksAndMessages(0);
+
+            if (mGetBookListCall != null) {
+                if (!mGetBookListCall.isCanceled()) {
+                    mGetBookListCall.cancel();
+                }
+            }
+
+        }
+    };
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        App.mHandler.removeCallbacksAndMessages(0);
+
+        if (mGetBookListCall != null) {
+            if (!mGetBookListCall.isCanceled()) {
+                mGetBookListCall.cancel();
+            }
+        }
     }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="pop_progress_start">#75970a</color>
+    <color name="pop_progress_center">#bfe24f</color>
+    <color name="pop_progress_end">#f5fae4</color>
+
+
+
+
+
+</resources>

@@ -19,7 +19,9 @@ import com.androidlongs.bookapplication.main.net.HttpHelper;
 import com.androidlongs.bookapplication.main.net.OkhttpRequestUtils;
 import com.androidlongs.bookapplication.main.util.GsonUtil;
 import com.androidlongs.bookapplication.main.util.LogUtils;
+import com.androidlongs.bookapplication.main.util.PopFunction;
 import com.androidlongs.bookapplication.main.util.ToastUtils;
+import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -37,6 +39,7 @@ import java.util.List;
 public class HomeBookListFrament extends BaseFrament {
 
     private RecyclerView mRecyclerView;
+    private Call mGetBookListCall;
 
     @Override
     public int getContentView() {
@@ -54,13 +57,18 @@ public class HomeBookListFrament extends BaseFrament {
 
         setRecyclerListData();
 
-        if (AppConfigFile.sIsTest) {
-            testDataLoadFuncation();
-        }else {
-            //加载本地数据
-            loadDbCacheDatas();
-        }
 
+        App.mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (AppConfigFile.sIsTest) {
+                    testDataLoadFuncation();
+                }else {
+                    //加载本地数据
+                    loadDbCacheDatas();
+                }
+            }
+        },700);
 
         mHomeBookListAdapter.setOnBookListItemClickLiserner(mItemClickLiserner);
 
@@ -110,13 +118,31 @@ public class HomeBookListFrament extends BaseFrament {
     private void getBookListFromNet() {
         LogUtils.d("加载网络数据");
         String url = HttpHelper.sHomeBookListUrl;
-        OkhttpRequestUtils.getInstance().getRequest(url, mGetBookListCallback);
+        mGetBookListCall = OkhttpRequestUtils.getInstance().getRequest(url, mGetBookListCallback);
     }
 
     private Callback mGetBookListCallback = new Callback() {
         @Override
         public void onFailure(Request request, IOException e) {
             LogUtils.e("net faile " + e.getMessage());
+            long currentTime = System.currentTimeMillis();
+            long flagTime = currentTime - mPreLoadTime;
+            if (flagTime > 2000) {
+                App.mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        PopFunction.getInstance().close(false);
+                    }
+                });
+            }else {
+                long delyTime = 2000 - flagTime;
+                App.mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        PopFunction.getInstance().close(false);
+                    }
+                },delyTime);
+            }
         }
 
         @Override
@@ -138,6 +164,7 @@ public class HomeBookListFrament extends BaseFrament {
                             setRecyclerListData();
                         }
                     });
+
                 } catch (final Exception e) {
                     App.mHandler.post(new Runnable() {
                         @Override
@@ -147,12 +174,32 @@ public class HomeBookListFrament extends BaseFrament {
                         }
                     });
 
+                }finally {
+                    long currentTime = System.currentTimeMillis();
+                    long flagTime = currentTime - mPreLoadTime;
+                    if (flagTime > 2000) {
+                        App.mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                PopFunction.getInstance().close(false);
+                            }
+                        });
+                    }else {
+                        long delyTime = 2000 - flagTime;
+                        App.mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                PopFunction.getInstance().close(false);
+                            }
+                        },delyTime);
+                    }
                 }
             }
         }
     };
 
 
+    private long mPreLoadTime = 0;
     //加载数据库中的数据
     private void loadDbCacheDatas() {
         LogUtils.d("加载本地数据");
@@ -163,7 +210,45 @@ public class HomeBookListFrament extends BaseFrament {
         }
         setRecyclerListData();
 
+        //加载网络数据
+        PopFunction.getInstance().fromBottomShow(App.mContext,mRecyclerView);
+        PopFunction.getInstance().setCloseLiserner(mOnProgressCloseLiserner);
+        mPreLoadTime = System.currentTimeMillis();
         getBookListFromNet();
     }
 
+    private PopFunction.OnProgressCloseLiserner mOnProgressCloseLiserner=new PopFunction.OnProgressCloseLiserner() {
+        @Override
+        public void onClose(boolean flag) {
+            if (flag) {
+                LogUtils.d("加载完成");
+                ToastUtils.show("加载完成");
+            }else {
+                LogUtils.d("取消加载");
+                ToastUtils.show("取消加载");
+            }
+
+            App.mHandler.removeCallbacksAndMessages(0);
+
+            if (mGetBookListCall != null) {
+                if (!mGetBookListCall.isCanceled()) {
+                    mGetBookListCall.cancel();
+                }
+            }
+
+        }
+    };
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        App.mHandler.removeCallbacksAndMessages(0);
+
+        if (mGetBookListCall != null) {
+            if (!mGetBookListCall.isCanceled()) {
+                mGetBookListCall.cancel();
+            }
+        }
+    }
 }

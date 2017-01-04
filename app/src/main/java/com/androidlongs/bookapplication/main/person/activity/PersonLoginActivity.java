@@ -19,6 +19,7 @@ import com.androidlongs.bookapplication.main.net.HttpHelper;
 import com.androidlongs.bookapplication.main.net.OkhttpRequestUtils;
 import com.androidlongs.bookapplication.main.util.GsonUtil;
 import com.androidlongs.bookapplication.main.util.LogUtils;
+import com.androidlongs.bookapplication.main.util.PopFunction;
 import com.androidlongs.bookapplication.main.util.ToastUtils;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -138,6 +139,7 @@ public class PersonLoginActivity extends BaseActivity {
     }
 
     private Call mLoginRequestCall;
+    private long mPreLoadTime;
     private View.OnClickListener mSubmitOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -151,6 +153,12 @@ public class PersonLoginActivity extends BaseActivity {
                     Map<String, String> keyMap = new HashMap<>();
                     keyMap.put("userName", userName);
                     keyMap.put("password", password);
+
+                    //加载网络数据
+                    PopFunction.getInstance().fromBottomShow(App.mContext,mUserNameEditText);
+                    PopFunction.getInstance().setCloseLiserner(mOnProgressCloseLiserner);
+                    PopFunction.getInstance().setCentTextView("正在登录");
+                    mPreLoadTime = System.currentTimeMillis();
                     mLoginRequestCall = OkhttpRequestUtils.getInstance().postRequest(url, keyMap, mLoginCallback);
                 } else {
                     ToastUtils.show("密码不可为空");
@@ -188,13 +196,26 @@ public class PersonLoginActivity extends BaseActivity {
         @Override
         public void onFailure(Request request, final IOException e) {
             LogUtils.e("登录失败 " + e.getMessage());
-            App.mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    ToastUtils.show("登录失败 " + e.getMessage());
-
-                }
-            });
+            long currentTime = System.currentTimeMillis();
+            long flagTime = currentTime - mPreLoadTime;
+            if (flagTime > 2000) {
+                App.mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.show("登录失败 " + e.getMessage());
+                        PopFunction.getInstance().close(false);
+                    }
+                });
+            }else {
+                long delyTime = 2000 - flagTime;
+                App.mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.show("登录失败 " + e.getMessage());
+                        PopFunction.getInstance().close(false);
+                    }
+                },delyTime);
+            }
         }
 
         @Override
@@ -262,10 +283,50 @@ public class PersonLoginActivity extends BaseActivity {
                         ToastUtils.show("登录异常");
                     }
                 });
+            }finally {
+                long currentTime = System.currentTimeMillis();
+                long flagTime = currentTime - mPreLoadTime;
+                if (flagTime > 2000) {
+                    App.mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            PopFunction.getInstance().close(false);
+                        }
+                    });
+                }else {
+                    long delyTime = 2000 - flagTime;
+                    App.mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            PopFunction.getInstance().close(false);
+                        }
+                    },delyTime);
+                }
             }
         }
     };
 
+    private PopFunction.OnProgressCloseLiserner mOnProgressCloseLiserner=new PopFunction.OnProgressCloseLiserner() {
+        @Override
+        public void onClose(boolean flag) {
+            if (flag) {
+                LogUtils.d("加载完成");
+                ToastUtils.show("加载完成");
+            }else {
+                LogUtils.d("取消加载");
+                ToastUtils.show("取消加载");
+            }
+
+            App.mHandler.removeCallbacksAndMessages(0);
+
+            if (mLoginRequestCall != null) {
+                if (!mLoginRequestCall.isCanceled()) {
+                    mLoginRequestCall.cancel();
+                }
+            }
+
+        }
+    };
     @Override
     protected void onDestroy() {
         super.onDestroy();
