@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="296dp"
+        android:layout_height="200dp"
+        android:layout_weight="0.00"
+        android:background="@drawable/bg_pop2_main">
+
+        <TextView
+            android:id="@+id/id_pop2_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_pop2_title"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="提示"
+            android:textColor="#fff"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/id_pop2_main_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="5"
+            android:padding="10dp"
+            android:text="网络错误"
+            android:textColor="@color/color5"
+            android:textSize="12sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/id_pop2_main_chose"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/color5"
+                android:text="确认"
+                android:textColor="#fff"
+                android:textSize="14sp"/>
+
+            <View
+                android:visibility="gone"
+                android:id="@+id/id_pop2_main_center"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#fff"/>
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/id_pop2_main_canle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/color5"
+                android:text="取消"
+                android:textColor="#fff"
+                android:textSize="14sp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

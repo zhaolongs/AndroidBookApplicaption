@@ -19,6 +19,7 @@ import com.androidlongs.bookapplication.main.net.HttpHelper;
 import com.androidlongs.bookapplication.main.net.OkhttpRequestUtils;
 import com.androidlongs.bookapplication.main.util.GsonUtil;
 import com.androidlongs.bookapplication.main.util.LogUtils;
+import com.androidlongs.bookapplication.main.util.Pop2Function;
 import com.androidlongs.bookapplication.main.util.PopFunction;
 import com.androidlongs.bookapplication.main.util.ToastUtils;
 import com.squareup.okhttp.Call;
@@ -51,11 +52,12 @@ public class PersonLoginActivity extends BaseActivity {
     }
 
 
-
     private LoginType mcurrentLoginType = LoginType.WELCOME;
-    private enum LoginType{
-        WELCOME,HOME,
+
+    private enum LoginType {
+        WELCOME, HOME,
     }
+
     @Override
     public void initView() {
         //返回
@@ -89,12 +91,12 @@ public class PersonLoginActivity extends BaseActivity {
         if (!TextUtils.isEmpty(tag)) {
             if (TextUtils.equals(tag, "person_login_tag")) {
                 //个人登录页面
-               mcurrentLoginType = LoginType.HOME;
+                mcurrentLoginType = LoginType.HOME;
             } else if (TextUtils.equals(tag, "welcome_tag")) {
                 //个人登录页面
-               mcurrentLoginType = LoginType.WELCOME;
+                mcurrentLoginType = LoginType.WELCOME;
             }
-        }else {
+        } else {
             mcurrentLoginType = LoginType.WELCOME;
         }
     }
@@ -117,11 +119,12 @@ public class PersonLoginActivity extends BaseActivity {
             SSMSLoginFunction();
         }
     };
+
     //短信登录
     private void SSMSLoginFunction() {
         Intent intent = new Intent(PersonLoginActivity.this, SmssLoginActivity.class);
 
-        switch (mcurrentLoginType){
+        switch (mcurrentLoginType) {
             case WELCOME:
                 intent.putExtra("tag", "welcome");
                 PersonLoginActivity.this.startActivity(intent);
@@ -155,7 +158,7 @@ public class PersonLoginActivity extends BaseActivity {
                     keyMap.put("password", password);
 
                     //加载网络数据
-                    PopFunction.getInstance().fromBottomShow(App.mContext,mUserNameEditText);
+                    PopFunction.getInstance().fromBottomShow(App.mContext, mUserNameEditText);
                     PopFunction.getInstance().setCloseLiserner(mOnProgressCloseLiserner);
                     PopFunction.getInstance().setCentTextView("正在登录");
                     mPreLoadTime = System.currentTimeMillis();
@@ -176,7 +179,7 @@ public class PersonLoginActivity extends BaseActivity {
             Intent intent = new Intent(PersonLoginActivity.this, RegisetrActivity.class);
 
 
-            switch (mcurrentLoginType){
+            switch (mcurrentLoginType) {
                 case WELCOME:
                     intent.putExtra("tag", "welcome");
                     PersonLoginActivity.this.startActivity(intent);
@@ -199,22 +202,11 @@ public class PersonLoginActivity extends BaseActivity {
             long currentTime = System.currentTimeMillis();
             long flagTime = currentTime - mPreLoadTime;
             if (flagTime > 2000) {
-                App.mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUtils.show("登录失败 " + e.getMessage());
-                        PopFunction.getInstance().close(false);
-                    }
-                });
-            }else {
+                flagTime = 0;
+                loadFailureFunction(flagTime,e);
+            } else {
                 long delyTime = 2000 - flagTime;
-                App.mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUtils.show("登录失败 " + e.getMessage());
-                        PopFunction.getInstance().close(false);
-                    }
-                },delyTime);
+                loadFailureFunction(delyTime,e);
             }
         }
 
@@ -244,7 +236,7 @@ public class PersonLoginActivity extends BaseActivity {
                             } else {
 
 
-                                switch (mcurrentLoginType){
+                                switch (mcurrentLoginType) {
                                     case WELCOME:
                                         LogUtils.d("登录  登录成功 " + result);
                                         App.sUserInfoModel = loginResponseModel.content;
@@ -283,7 +275,7 @@ public class PersonLoginActivity extends BaseActivity {
                         ToastUtils.show("登录异常");
                     }
                 });
-            }finally {
+            } finally {
                 long currentTime = System.currentTimeMillis();
                 long flagTime = currentTime - mPreLoadTime;
                 if (flagTime > 2000) {
@@ -293,26 +285,43 @@ public class PersonLoginActivity extends BaseActivity {
                             PopFunction.getInstance().close(false);
                         }
                     });
-                }else {
+                } else {
                     long delyTime = 2000 - flagTime;
                     App.mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             PopFunction.getInstance().close(false);
                         }
-                    },delyTime);
+                    }, delyTime);
                 }
             }
         }
     };
 
-    private PopFunction.OnProgressCloseLiserner mOnProgressCloseLiserner=new PopFunction.OnProgressCloseLiserner() {
+    private void loadFailureFunction(long flagTime, final IOException e) {
+        App.mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ToastUtils.show("登录失败 " + e.getMessage());
+                PopFunction.getInstance().close(false);
+                Pop2Function
+                        .getInstance()
+                        .initFunction()
+                        .setContentTextView("登录失败,请检查手机网络或者重新输入用户名与密码")
+                        .setChoseButton("确认")
+                        .setChoseClickListener(mLoginFaileOnClickListener)
+                        .show(mRegisterTextView);
+            }
+        },flagTime);
+    }
+
+    private PopFunction.OnProgressCloseLiserner mOnProgressCloseLiserner = new PopFunction.OnProgressCloseLiserner() {
         @Override
         public void onClose(boolean flag) {
             if (flag) {
                 LogUtils.d("加载完成");
                 ToastUtils.show("加载完成");
-            }else {
+            } else {
                 LogUtils.d("取消加载");
                 ToastUtils.show("取消加载");
             }
@@ -327,6 +336,13 @@ public class PersonLoginActivity extends BaseActivity {
 
         }
     };
+    private Pop2Function.OnPop2ChoseClickListener mLoginFaileOnClickListener = new Pop2Function.OnPop2ChoseClickListener() {
+        @Override
+        public void onChose() {
+
+        }
+    };
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

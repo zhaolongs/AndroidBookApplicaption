@@ -13,6 +13,7 @@ import com.androidlongs.bookapplication.base.BaseModel;
 import com.androidlongs.bookapplication.main.home.adapter.HomeBookClassAdapter;
 import com.androidlongs.bookapplication.main.home.inter.OnBookListItemClickLiserner;
 import com.androidlongs.bookapplication.main.home.model.BookClassModel;
+import com.androidlongs.bookapplication.main.home.model.BookClassResponeModel;
 import com.androidlongs.bookapplication.main.net.HttpHelper;
 import com.androidlongs.bookapplication.main.net.OkhttpRequestUtils;
 import com.androidlongs.bookapplication.main.util.GsonUtil;
@@ -86,8 +87,8 @@ public class HomeBookClassFrament extends BaseFrament {
     private void loadTestDataFunction() {
         for (int i = 0; i < 10; i++) {
             BookClassModel model = new BookClassModel();
-            model.name = "小说";
-            model.description = "\t走进纷扰的红尘，我们一不留神就走进苍茫的大地里，那里有黄昏的寂寞，也有日暮苍山远的清凉，在冷落的空气中，更多的时候是与自然相伴，与天地相互融合，走是一种心灵的追求，不管是遭遇生离死别，还是人生的阴晴圆缺，我们都不得停留，在行走在人性的高度，孤独掩饰的是一种大爱无痕，是一种真情的留恋，也是一种天涯咫尺的思念";
+            model.bcname = "小说";
+            model.bcdesc = "\t走进纷扰的红尘，我们一不留神就走进苍茫的大地里，那里有黄昏的寂寞，也有日暮苍山远的清凉，在冷落的空气中，更多的时候是与自然相伴，与天地相互融合，走是一种心灵的追求，不管是遭遇生离死别，还是人生的阴晴圆缺，我们都不得停留，在行走在人性的高度，孤独掩饰的是一种大爱无痕，是一种真情的留恋，也是一种天涯咫尺的思念";
 
             mBookClassModels.add(model);
         }
@@ -102,7 +103,7 @@ public class HomeBookClassFrament extends BaseFrament {
 
         if (baseModelList != null) {
             for (BaseModel baseModel : baseModelList) {
-                mBookClassModels.add((BookClassModel) baseModel);
+                mBookClassModels.add(baseModel);
             }
             //加载网络数据
             PopFunction.getInstance().fromBottomShow(App.mContext, mRecyclerView);
@@ -111,7 +112,7 @@ public class HomeBookClassFrament extends BaseFrament {
             setRecyListData();
         }
 
-//加载网络数据
+        //加载网络数据
         PopFunction.getInstance().fromRightShow(App.mContext, mRecyclerView);
         PopFunction.getInstance().setCloseLiserner(mOnProgressCloseLiserner);
         mPreLoadTime = System.currentTimeMillis();
@@ -120,7 +121,7 @@ public class HomeBookClassFrament extends BaseFrament {
     }
 
     private void loadNetDatas() {
-        String url = HttpHelper.sBaseUrl + "?tag=getBookClassList";
+        String url = HttpHelper.sBaseUrl + "/manager/getbookclass";
         mGetBookListCall = OkhttpRequestUtils.getInstance().getRequest(url, mBookClassCallback);
     }
 
@@ -156,10 +157,18 @@ public class HomeBookClassFrament extends BaseFrament {
 
                 String string = response.body().string();
                 LogUtils.d("加载完成 " + string);
-                mBookClassModels = GsonUtil.parseJsonArrayWithGson(string, BookClassModel.class);
+
+                BookClassResponeModel loginResponseModel = GsonUtil.parseJsonWithGson(string, BookClassResponeModel.class);
+
+                List<BookClassModel> contentList = loginResponseModel.contentList;
+
+                for (int i=0;i<contentList.size();i++){
+                    mBookClassModels.add(contentList.get(i));
+                }
+
                 LogUtils.d("解析完成 " + mBookClassModels);
                 //更新本地数据
-                for (BookClassModel bookClassModel : mBookClassModels) {
+                for (BaseModel bookClassModel : mBookClassModels) {
                     mCommonBaseServiceInterface.addBookClassModel(bookClassModel);
                 }
                 //更新列表
@@ -200,7 +209,7 @@ public class HomeBookClassFrament extends BaseFrament {
             }
         }
     };
-    private List<BookClassModel> mBookClassModels = new ArrayList<>();
+    private List<BaseModel> mBookClassModels = new ArrayList<>();
 
     private void setRecyListData() {
         if (mBookClassAdapter == null) {

@@ -36,7 +36,7 @@ public class CommonBaseServiceImpl implements CommonBaseServiceInterface {
     }
 
     @Override
-    public void addBookClassModel(BookClassModel bookClassModel) {
+    public void addBookClassModel(BaseModel bookClassModel) {
         mBookClassModelDao.inserModel(bookClassModel);
     }
 

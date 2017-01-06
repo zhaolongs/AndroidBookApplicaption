@@ -28,19 +28,19 @@ public class BookClassModelDaoImple implements BookClassModelDao {
         StringBuilder builder = new StringBuilder();
 
         //查询是否已存
-        BaseModel baseModel = queryModel(classModel.id);
+        BaseModel baseModel = queryModel(classModel.bcuuid);
 
 
         builder.append(inserSql);
         builder.append("  \"");
-        builder.append(classModel.id);
+        builder.append(classModel.bcuuid);
         builder.append("\" , \"");
-        builder.append(classModel.name);
+        builder.append(classModel.bcname);
 
         builder.append("\", \"");
-        builder.append(classModel.path);
+        builder.append(" ");
         builder.append("\", \"");
-        builder.append(classModel.description);
+        builder.append(classModel.bcdesc);
         builder.append("\", \"");
         builder.append(new Date().getTime() + "");
         builder.append("\" )");
@@ -73,9 +73,9 @@ public class BookClassModelDaoImple implements BookClassModelDao {
             BookClassModel bookClassModel = new BookClassModel();
             if (cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
-                    bookClassModel.id = cursor.getString(cursor.getColumnIndex("id"));
-                    bookClassModel.name = cursor.getString(cursor.getColumnIndex("name"));
-                    bookClassModel.description = cursor.getString(cursor.getColumnIndex("description"));
+                    bookClassModel.bcuuid = cursor.getString(cursor.getColumnIndex("id"));
+                    bookClassModel.bcname = cursor.getString(cursor.getColumnIndex("name"));
+                    bookClassModel.bcdesc = cursor.getString(cursor.getColumnIndex("description"));
                 }
                 LogUtils.d("数据库  查询书籍分类信息 "+bookClassModel.toString());
                 return bookClassModel;
@@ -99,11 +99,11 @@ public class BookClassModelDaoImple implements BookClassModelDao {
 
         String[] values =
                 {
-                        classModel.name,
-                        classModel.description,
-                        classModel.path,
+                        classModel.bcname,
+                        classModel.bcdesc,
+                        "",
                         new Date().getTime() + "",
-                        classModel.id
+                        classModel.bcuuid
                 };
 
 

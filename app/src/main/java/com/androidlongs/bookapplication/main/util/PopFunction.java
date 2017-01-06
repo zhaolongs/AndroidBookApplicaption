@@ -101,6 +101,9 @@ public class PopFunction {
 
     private void showFunctionx(Context context, View view, int sytle) {
 
+        if (view==null) {
+            return;
+        }
         // 获取自定义布局文件activity_popupwindow_left.xml的视图
         View popupWindow_view = View.inflate(context, R.layout.pop_progress_loading, null);
 

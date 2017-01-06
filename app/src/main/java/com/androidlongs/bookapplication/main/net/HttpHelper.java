@@ -7,7 +7,7 @@ package com.androidlongs.bookapplication.main.net;
  */
 
 public class HttpHelper {
-    public static  String sBaseUrl = "http://192.168.0.114:10008//Book/";
+    public static  String sBaseUrl = "http://192.168.0.105:10008//Book/";
 
     public static  String sLoginUrl = sBaseUrl+"/moble/login";
     public static  String sRegisterUrl = sBaseUrl+"/moble/regiseter";

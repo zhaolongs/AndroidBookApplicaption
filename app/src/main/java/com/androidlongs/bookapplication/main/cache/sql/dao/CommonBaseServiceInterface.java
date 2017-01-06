@@ -20,7 +20,7 @@ public interface CommonBaseServiceInterface {
 
 
 
-    void addBookClassModel(BookClassModel bookClassModel);
+    void addBookClassModel(BaseModel bookClassModel);
     BookClassModel queryBookClassModel(String name);
     List<BaseModel> queryAllBookClassModel();
 }

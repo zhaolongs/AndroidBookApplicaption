@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.androidlongs.bookapplication.R;
 import com.androidlongs.bookapplication.base.App;
+import com.androidlongs.bookapplication.base.BaseModel;
 import com.androidlongs.bookapplication.main.home.inter.OnBookListItemClickLiserner;
 import com.androidlongs.bookapplication.main.home.model.BookClassModel;
 
@@ -22,9 +23,9 @@ import java.util.List;
  */
 
 public class HomeBookClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<BookClassModel> mBookClassList;
+    private List<BaseModel> mBookClassList;
 
-    public HomeBookClassAdapter(List<BookClassModel> bookClassModels) {
+    public HomeBookClassAdapter(List<BaseModel> bookClassModels) {
         if (bookClassModels == null) {
             bookClassModels = new ArrayList<>();
         }
@@ -50,7 +51,7 @@ public class HomeBookClassAdapter extends RecyclerView.Adapter<RecyclerView.View
         return this.mBookClassList.size();
     }
 
-    public void setDatas(List<BookClassModel> bookClassModels) {
+    public void setDatas(List<BaseModel> bookClassModels) {
         this.mBookClassList = bookClassModels;
     }
 
@@ -71,9 +72,12 @@ public class HomeBookClassAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         //当前点击的位置
         private int mPosition =0;
-        public void setDatas(BookClassModel bookClassModel, int position) {
-            String description = bookClassModel.description;
-            String name = bookClassModel.name;
+        public void setDatas(BaseModel model, int position) {
+
+            BookClassModel bookClassModel = (BookClassModel) model;
+
+            String description = bookClassModel.bcdesc;
+            String name = bookClassModel.bcname;
             if (TextUtils.isEmpty(name)) {
                 name = "未知";
             }

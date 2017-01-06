@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <style name="pop2_from_bottom_anim_style">
+        <item name="android:windowEnterAnimation">@anim/pop2_from_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/pop2_from_bottom_out</item>
+    </style>
+
+
+</resources>
