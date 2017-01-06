@@ -1,6 +1,8 @@
 package com.androidlongs.bookapplication.main.net;
 
 
+import com.androidlongs.bookapplication.base.App;
+import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -12,6 +14,7 @@ import com.squareup.okhttp.RequestBody;
 
 import java.io.File;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -40,6 +43,17 @@ public class OkhttpRequestUtils {
 
     private void initFunction() {
         mOkHttpClient = new OkHttpClient();
+        //配制网络数据缓存
+        File cacheDirectory = App.mContext.getExternalCacheDir();
+        //配制网络数据缓存大小  10M
+        int cacheSize = 10*1024*1024;
+        //
+        Cache cache = new Cache(cacheDirectory,cacheSize);
+        //创建HttpClientBuilder
+        mOkHttpClient.setCache(cache);
+        mOkHttpClient.setWriteTimeout(10,TimeUnit.SECONDS);
+        mOkHttpClient.setReadTimeout(30,TimeUnit.SECONDS);
+        mOkHttpClient.setConnectTimeout(20,TimeUnit.SECONDS);
     }
 
 
